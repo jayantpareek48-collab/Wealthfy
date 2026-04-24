@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Wealthify - Financial Literacy</title>
+</head>
+<body>
+  <h1>Welcome to Wealthify 🚀</h1>
+  <p>Learn finance from zero to hero.</p>
+</body>
+</html>
