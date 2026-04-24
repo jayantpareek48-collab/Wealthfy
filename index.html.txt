@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Wealthify - Financial Literacy</title>
+  <title>Wealthfy - Financial Literacy</title>
 </head>
 <body>
-  <h1>Welcome to Wealthify 🚀</h1>
+  <h1>Welcome to Wealthfy 🚀</h1>
   <p>Learn finance from zero to hero.</p>
 </body>
 </html>
