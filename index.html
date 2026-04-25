@@ -40,26 +40,26 @@
 
     nav a:hover{color:var(--text)}
 
-    /* BIGGER HERO */
+    /* EXTRA BIG HERO */
     .hero{
       text-align:center;
-      padding:90px 10px 70px; /* increased height */
+      padding:140px 10px 110px; /* much bigger */
       background:linear-gradient(135deg,#0b0f1a,#111a2e);
     }
 
     .hero h1{
-      font-size:36px; /* bigger heading */
-      margin-bottom:14px;
+      font-size:42px;
+      margin-bottom:16px;
+      font-weight:700;
     }
 
     .hero p{
       color:var(--muted);
-      font-size:15px;
+      font-size:16px;
     }
 
     section{padding:28px 0}
 
-    /* GLASS CARDS */
     #tools{
       display:grid;grid-template-columns:repeat(3,1fr);gap:18px;
     }
@@ -77,8 +77,6 @@
       border-color:var(--primary);
     }
 
-    .box h3{margin-bottom:12px}
-
     input{
       width:100%;padding:10px;margin-bottom:10px;
       border-radius:8px;border:1px solid var(--border);
@@ -91,45 +89,73 @@
       font-weight:bold;cursor:pointer;
     }
 
-    /* RESULT */
     .result{
       font-size:16px;font-weight:600;margin-top:8px;
       color:var(--primary);
     }
 
-    /* SCROLLABLE INFO SECTION */
+    /* INFO SECTION WITH BUTTONS */
     .info-wrapper{
-      overflow-x:auto; /* enable scroll */
-      padding-bottom:10px;
+      overflow-x:auto;
+      padding-bottom:20px;
+      border-top:1px solid var(--border);
+      margin-top:20px;
     }
 
     .info-grid{
-      display:flex; /* horizontal scroll layout */
-      gap:18px;
-      min-width:900px; /* force scroll */
+      display:flex;
+      gap:20px;
+      min-width:950px;
+      padding-top:20px;
     }
 
     .info-box{
-      min-width:280px; /* wider cards */
+      min-width:300px;
       background:var(--glass);
       backdrop-filter:blur(10px);
       border:1px solid var(--border);
-      padding:18px;
-      border-radius:12px;
+      padding:20px;
+      border-radius:14px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+
+    .info-box h4{
+      margin-bottom:10px;
+      font-size:15px;
+      color:var(--text);
+    }
+
+    .info-box p{
       color:var(--muted);
-      line-height:1.6;
       font-size:14px;
+      line-height:1.6;
+      margin-bottom:15px;
+    }
+
+    .info-btn{
+      align-self:flex-end;
+      padding:6px 12px;
+      font-size:12px;
+      border-radius:6px;
+      background:var(--primary);
+      color:#001433;
+      border:none;
+      cursor:pointer;
     }
 
     footer{
       border-top:1px solid var(--border);
-      padding:12px 0;display:flex;justify-content:space-between;
+      padding:12px 0;
+      display:flex;justify-content:space-between;
       font-size:12px;color:var(--muted);
     }
 
     @media(max-width:768px){
       #tools{grid-template-columns:1fr}
     }
+
   </style>
 </head>
 
@@ -181,12 +207,31 @@
   </div>
 </section>
 
-<!-- IMPROVED SCROLL INFO -->
 <div class="info-wrapper">
   <section class="info-grid">
-    <div class="info-box">Learn finance basics in a clear, practical way. Understand SIP, compounding, and saving habits step by step without confusion.</div>
-    <div class="info-box">Wealthfy gives you a clean UI, fast tools, and simple logic so you can focus on learning instead of getting overwhelmed.</div>
-    <div class="info-box">Built by a student who wanted finance to be easy. This platform is designed for real beginners starting their journey.</div>
+    <div class="info-box">
+      <div>
+        <h4>Learn Finance</h4>
+        <p>Understand money, SIP, and investing with simple explanations made for beginners.</p>
+      </div>
+      <button class="info-btn">Explore</button>
+    </div>
+
+    <div class="info-box">
+      <div>
+        <h4>Why Wealthfy</h4>
+        <p>Clean UI, fast tools, and student-focused learning to make finance easy.</p>
+      </div>
+      <button class="info-btn">View</button>
+    </div>
+
+    <div class="info-box">
+      <div>
+        <h4>About Creator</h4>
+        <p>Built by a student to simplify finance and help others learn money skills.</p>
+      </div>
+      <button class="info-btn">Read</button>
+    </div>
   </section>
 </div>
 
