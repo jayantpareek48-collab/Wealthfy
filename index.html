@@ -40,13 +40,22 @@
 
     nav a:hover{color:var(--text)}
 
+    /* BIGGER HERO */
     .hero{
-      text-align:center;padding:50px 10px 30px;
+      text-align:center;
+      padding:90px 10px 70px; /* increased height */
       background:linear-gradient(135deg,#0b0f1a,#111a2e);
     }
 
-    .hero h1{font-size:30px;margin-bottom:10px}
-    .hero p{color:var(--muted)}
+    .hero h1{
+      font-size:36px; /* bigger heading */
+      margin-bottom:14px;
+    }
+
+    .hero p{
+      color:var(--muted);
+      font-size:15px;
+    }
 
     section{padding:28px 0}
 
@@ -82,23 +91,34 @@
       font-weight:bold;cursor:pointer;
     }
 
-    /* RESULT ANIMATION */
+    /* RESULT */
     .result{
       font-size:16px;font-weight:600;margin-top:8px;
       color:var(--primary);
     }
 
-    /* INFO */
+    /* SCROLLABLE INFO SECTION */
+    .info-wrapper{
+      overflow-x:auto; /* enable scroll */
+      padding-bottom:10px;
+    }
+
     .info-grid{
-      display:grid;grid-template-columns:repeat(3,1fr);gap:18px;
+      display:flex; /* horizontal scroll layout */
+      gap:18px;
+      min-width:900px; /* force scroll */
     }
 
     .info-box{
+      min-width:280px; /* wider cards */
       background:var(--glass);
       backdrop-filter:blur(10px);
       border:1px solid var(--border);
-      padding:16px;border-radius:12px;
+      padding:18px;
+      border-radius:12px;
       color:var(--muted);
+      line-height:1.6;
+      font-size:14px;
     }
 
     footer{
@@ -108,7 +128,7 @@
     }
 
     @media(max-width:768px){
-      #tools,.info-grid{grid-template-columns:1fr}
+      #tools{grid-template-columns:1fr}
     }
   </style>
 </head>
@@ -161,11 +181,14 @@
   </div>
 </section>
 
-<section class="info-grid">
-  <div class="info-box">Learn finance basics with simple explanations.</div>
-  <div class="info-box">Clean UI and tools made for beginners.</div>
-  <div class="info-box">Built by a student for students.</div>
-</section>
+<!-- IMPROVED SCROLL INFO -->
+<div class="info-wrapper">
+  <section class="info-grid">
+    <div class="info-box">Learn finance basics in a clear, practical way. Understand SIP, compounding, and saving habits step by step without confusion.</div>
+    <div class="info-box">Wealthfy gives you a clean UI, fast tools, and simple logic so you can focus on learning instead of getting overwhelmed.</div>
+    <div class="info-box">Built by a student who wanted finance to be easy. This platform is designed for real beginners starting their journey.</div>
+  </section>
+</div>
 
 <footer>
   <span>© 2026 Wealthfy</span>
