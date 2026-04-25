@@ -1,253 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Wealthfy Pro</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wealthfy</title>
+    <link rel="icon" type="image/png" href="favicon.png">
 
-<style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial;
-}
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: #f4f8fb;
+        }
 
-body{
-  background:#0b1220;
-  color:white;
-  display:flex;
-}
+        /* NAVBAR */
+        .navbar {
+            background: #0b3d91;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+        }
 
-/* SIDEBAR (Zerodha style) */
-.sidebar{
-  width:230px;
-  height:100vh;
-  background:#0f172a;
-  padding:20px;
-  border-right:1px solid rgba(255,255,255,0.05);
-}
+        .nav-left a {
+            color: white;
+            text-decoration: none;
+            margin-right: 15px;
+        }
 
-.brand{
-  font-size:20px;
-  font-weight:bold;
-  color:#38bdf8;
-  margin-bottom:30px;
-}
+        /* LOGIN BUTTON (PRO LOOK) */
+        .login-btn {
+            background: white;
+            color: #0b3d91;
+            padding: 8px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
 
-.nav{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
+        .login-btn:hover {
+            background: #e6f0ff;
+        }
 
-.nav button{
-  background:none;
-  border:none;
-  color:#94a3b8;
-  text-align:left;
-  padding:10px;
-  border-radius:8px;
-  cursor:pointer;
-  transition:0.2s;
-}
+        /* HERO SECTION */
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+        }
 
-.nav button:hover{
-  background:#1e293b;
-  color:white;
-}
+        .hero h1 {
+            color: #0b3d91;
+            font-size: 40px;
+        }
 
-.nav .active{
-  background:#1e293b;
-  color:#38bdf8;
-}
+        .hero p {
+            color: #444;
+        }
 
-/* MAIN AREA */
-.main{
-  flex:1;
-  padding:25px;
-}
-
-/* HEADER */
-.header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:20px;
-}
-
-.header h2{
-  color:#38bdf8;
-}
-
-/* GRID */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:15px;
-}
-
-/* CARD */
-.card{
-  background:#111a2e;
-  padding:20px;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,0.05);
-}
-
-.card h3{
-  color:#38bdf8;
-  margin-bottom:10px;
-}
-
-/* INPUT */
-input{
-  width:100%;
-  padding:10px;
-  margin:6px 0;
-  border:none;
-  border-radius:8px;
-  background:#1e293b;
-  color:white;
-}
-
-button.calc{
-  width:100%;
-  padding:10px;
-  margin-top:10px;
-  background:#38bdf8;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-}
-
-/* SECTIONS */
-.section{
-  display:none;
-}
-
-.active-section{
-  display:block;
-}
-</style>
+        .btn {
+            background: #0b3d91;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+    </style>
 </head>
 
 <body>
 
-<!-- SIDEBAR -->
-<div class="sidebar">
-  <div class="brand">Wealthfy</div>
-
-  <div class="nav">
-    <button class="tab active" onclick="openTab('dashboard',this)">Dashboard</button>
-    <button class="tab" onclick="openTab('sip',this)">SIP Calculator</button>
-    <button class="tab" onclick="openTab('goal',this)">Goal Planner</button>
-    <button class="tab" onclick="openTab('save',this)">Saving Tracker</button>
-  </div>
-</div>
-
-<!-- MAIN -->
-<div class="main">
-
-<!-- DASHBOARD -->
-<div id="dashboard" class="section active-section">
-  <div class="header">
-    <h2>Dashboard</h2>
-  </div>
-
-  <div class="grid">
-    <div class="card">
-      <h3>Total Wealth</h3>
-      <p>₹ 1,20,000 (Demo)</p>
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="nav-left">
+        <a href="#">Home</a>
+        <a href="#about">About</a>
+        <a href="#features">Features</a>
     </div>
 
-    <div class="card">
-      <h3>Monthly Growth</h3>
-      <p>+12.4%</p>
-    </div>
-
-    <div class="card">
-      <h3>Active Tools</h3>
-      <p>3 Finance Tools</p>
-    </div>
-  </div>
+    <a href="login.html" class="login-btn">Login</a>
 </div>
 
-<!-- SIP -->
-<div id="sip" class="section">
-  <div class="header"><h2>SIP Calculator</h2></div>
-
-  <div class="card">
-    <input id="p" placeholder="Monthly Investment">
-    <input id="r" placeholder="Return %">
-    <input id="t" placeholder="Years">
-    <button class="calc" onclick="sip()">Calculate</button>
-    <p id="sout"></p>
-  </div>
+<!-- HERO -->
+<div class="hero">
+    <h1>Wealthfy 🚀</h1>
+    <p>Learn Finance • Play Stock Games • Build Money Skills</p>
+    <a class="btn" href="#features">Start Learning</a>
 </div>
-
-<!-- GOAL -->
-<div id="goal" class="section">
-  <div class="header"><h2>Goal Planner</h2></div>
-
-  <div class="card">
-    <input id="g" placeholder="Goal Amount">
-    <input id="y" placeholder="Years">
-    <button class="calc" onclick="goal()">Calculate</button>
-    <p id="gout"></p>
-  </div>
-</div>
-
-<!-- SAVE -->
-<div id="save" class="section">
-  <div class="header"><h2>Saving Tracker</h2></div>
-
-  <div class="card">
-    <input id="i" placeholder="Income">
-    <input id="e" placeholder="Expense">
-    <button class="calc" onclick="save()">Calculate</button>
-    <p id="out"></p>
-  </div>
-</div>
-
-</div>
-
-<script>
-
-/* TAB SYSTEM (Zerodha-style navigation) */
-function openTab(tab,btn){
-
-  document.querySelectorAll(".section").forEach(s=>{
-    s.classList.remove("active-section");
-  });
-
-  document.getElementById(tab).classList.add("active-section");
-
-  document.querySelectorAll(".tab").forEach(t=>{
-    t.classList.remove("active");
-  });
-
-  btn.classList.add("active");
-}
-
-/* CALCULATIONS */
-function sip(){
-  let P=+p.value;
-  let R=(+r.value)/100/12;
-  let N=(+t.value)*12;
-
-  sout.innerText="₹ "+Math.round(P*((Math.pow(1+R,N)-1)/R)*(1+R));
-}
-
-function goal(){
-  gout.innerText="₹ "+Math.round(g.value/(y.value*12));
-}
-
-function save(){
-  out.innerText="₹ "+(i.value-e.value);
-}
-
-</script>
 
 </body>
 </html>
