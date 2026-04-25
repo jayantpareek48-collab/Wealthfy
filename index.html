@@ -1,178 +1,250 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Wealthfy SaaS</title>
+<meta charset="UTF-8">
+<title>Wealthfy Pro</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body{
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
   font-family:Arial;
+}
+
+body{
   background:#0b1220;
+  color:white;
+  display:flex;
+}
+
+/* SIDEBAR (Zerodha style) */
+.sidebar{
+  width:230px;
+  height:100vh;
+  background:#0f172a;
+  padding:20px;
+  border-right:1px solid rgba(255,255,255,0.05);
+}
+
+.brand{
+  font-size:20px;
+  font-weight:bold;
+  color:#38bdf8;
+  margin-bottom:30px;
+}
+
+.nav{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.nav button{
+  background:none;
+  border:none;
+  color:#94a3b8;
+  text-align:left;
+  padding:10px;
+  border-radius:8px;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.nav button:hover{
+  background:#1e293b;
   color:white;
 }
 
-.center{
-  height:100vh;
+.nav .active{
+  background:#1e293b;
+  color:#38bdf8;
+}
+
+/* MAIN AREA */
+.main{
+  flex:1;
+  padding:25px;
+}
+
+/* HEADER */
+.header{
   display:flex;
-  justify-content:center;
+  justify-content:space-between;
   align-items:center;
-  flex-direction:column;
+  margin-bottom:20px;
 }
 
-input,button{
+.header h2{
+  color:#38bdf8;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:15px;
+}
+
+/* CARD */
+.card{
+  background:#111a2e;
+  padding:20px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.05);
+}
+
+.card h3{
+  color:#38bdf8;
+  margin-bottom:10px;
+}
+
+/* INPUT */
+input{
+  width:100%;
   padding:10px;
-  margin:5px;
-  width:250px;
-  border-radius:8px;
+  margin:6px 0;
   border:none;
+  border-radius:8px;
+  background:#1e293b;
+  color:white;
 }
 
-button{
+button.calc{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
   background:#38bdf8;
+  border:none;
+  border-radius:8px;
   cursor:pointer;
 }
 
-.dashboard{
+/* SECTIONS */
+.section{
   display:none;
-  padding:20px;
 }
 
-.card{
-  background:#111a2e;
-  padding:15px;
-  margin:10px;
-  border-radius:10px;
+.active-section{
+  display:block;
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
-<div class="center" id="auth">
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="brand">Wealthfy</div>
 
-<h2>Wealthfy SaaS Login</h2>
-
-<input id="email" placeholder="Email">
-<input id="pass" type="password" placeholder="Password">
-
-<button onclick="signup()">Signup</button>
-<button onclick="login()">Login</button>
-
+  <div class="nav">
+    <button class="tab active" onclick="openTab('dashboard',this)">Dashboard</button>
+    <button class="tab" onclick="openTab('sip',this)">SIP Calculator</button>
+    <button class="tab" onclick="openTab('goal',this)">Goal Planner</button>
+    <button class="tab" onclick="openTab('save',this)">Saving Tracker</button>
+  </div>
 </div>
+
+<!-- MAIN -->
+<div class="main">
 
 <!-- DASHBOARD -->
-<div class="dashboard" id="dash">
+<div id="dashboard" class="section active-section">
+  <div class="header">
+    <h2>Dashboard</h2>
+  </div>
 
-<h2>Welcome <span id="user"></span></h2>
-<button onclick="logout()">Logout</button>
+  <div class="grid">
+    <div class="card">
+      <h3>Total Wealth</h3>
+      <p>₹ 1,20,000 (Demo)</p>
+    </div>
 
-<div class="card">
-<h3>SIP Calculator</h3>
-<input id="p" placeholder="Monthly Investment">
-<input id="r" placeholder="Return %">
-<input id="t" placeholder="Years">
-<button onclick="saveSIP()">Save SIP</button>
+    <div class="card">
+      <h3>Monthly Growth</h3>
+      <p>+12.4%</p>
+    </div>
+
+    <div class="card">
+      <h3>Active Tools</h3>
+      <p>3 Finance Tools</p>
+    </div>
+  </div>
 </div>
 
-<div class="card">
-<h3>Your Saved Data</h3>
-<button onclick="loadData()">Load Data</button>
-<div id="data"></div>
+<!-- SIP -->
+<div id="sip" class="section">
+  <div class="header"><h2>SIP Calculator</h2></div>
+
+  <div class="card">
+    <input id="p" placeholder="Monthly Investment">
+    <input id="r" placeholder="Return %">
+    <input id="t" placeholder="Years">
+    <button class="calc" onclick="sip()">Calculate</button>
+    <p id="sout"></p>
+  </div>
+</div>
+
+<!-- GOAL -->
+<div id="goal" class="section">
+  <div class="header"><h2>Goal Planner</h2></div>
+
+  <div class="card">
+    <input id="g" placeholder="Goal Amount">
+    <input id="y" placeholder="Years">
+    <button class="calc" onclick="goal()">Calculate</button>
+    <p id="gout"></p>
+  </div>
+</div>
+
+<!-- SAVE -->
+<div id="save" class="section">
+  <div class="header"><h2>Saving Tracker</h2></div>
+
+  <div class="card">
+    <input id="i" placeholder="Income">
+    <input id="e" placeholder="Expense">
+    <button class="calc" onclick="save()">Calculate</button>
+    <p id="out"></p>
+  </div>
 </div>
 
 </div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { 
-getAuth,
-createUserWithEmailAndPassword,
-signInWithEmailAndPassword,
-signOut,
-onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+<script>
 
-import {
-getFirestore,
-doc,
-setDoc,
-getDoc
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+/* TAB SYSTEM (Zerodha-style navigation) */
+function openTab(tab,btn){
 
-/* 🔥 FIREBASE CONFIG */
-const firebaseConfig = {
-apiKey: "YOUR_API_KEY",
-authDomain: "YOUR_PROJECT.firebaseapp.com",
-projectId: "wealthfy-59f90"
-};
+  document.querySelectorAll(".section").forEach(s=>{
+    s.classList.remove("active-section");
+  });
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+  document.getElementById(tab).classList.add("active-section");
 
-/* SIGNUP */
-window.signup = function(){
-createUserWithEmailAndPassword(auth,email.value,pass.value)
-.then(()=>alert("Account Created"))
-.catch(e=>alert(e.message));
+  document.querySelectorAll(".tab").forEach(t=>{
+    t.classList.remove("active");
+  });
+
+  btn.classList.add("active");
 }
 
-/* LOGIN */
-window.login = function(){
-signInWithEmailAndPassword(auth,email.value,pass.value)
-.then(u=>{
-showDash(u.user.email);
-})
-.catch(e=>alert("Wrong login"));
+/* CALCULATIONS */
+function sip(){
+  let P=+p.value;
+  let R=(+r.value)/100/12;
+  let N=(+t.value)*12;
+
+  sout.innerText="₹ "+Math.round(P*((Math.pow(1+R,N)-1)/R)*(1+R));
 }
 
-/* AUTH STATE */
-onAuthStateChanged(auth,(user)=>{
-if(user){
-showDash(user.email);
-}
-});
-
-/* SHOW DASH */
-function showDash(email){
-document.getElementById("auth").style.display="none";
-document.getElementById("dash").style.display="block";
-document.getElementById("user").innerText=email;
+function goal(){
+  gout.innerText="₹ "+Math.round(g.value/(y.value*12));
 }
 
-/* SAVE DATA (SaaS FEATURE) */
-window.saveSIP = async function(){
-const user = auth.currentUser;
-
-if(!user) return;
-
-await setDoc(doc(db,"users",user.email),{
-sip:{
-p:p.value,
-r:r.value,
-t:t.value
-}
-});
-
-alert("Saved to Cloud");
-}
-
-/* LOAD DATA */
-window.loadData = async function(){
-const user = auth.currentUser;
-
-const snap = await getDoc(doc(db,"users",user.email));
-
-if(snap.exists()){
-data.innerText = JSON.stringify(snap.data(),null,2);
-}
-}
-
-/* LOGOUT */
-window.logout = function(){
-signOut(auth);
-location.reload();
+function save(){
+  out.innerText="₹ "+(i.value-e.value);
 }
 
 </script>
