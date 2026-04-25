@@ -167,3 +167,40 @@ footer {
     align-items: center;
   }
 }
+/* HERO SECTION FIX */
+.hero {
+  padding: 60px 20px; /* reduced from large padding */
+  text-align: center;
+}
+
+/* Main Heading */
+.hero h1 {
+  font-size: 38px; /* slightly smaller */
+  line-height: 1.2; /* tighter spacing */
+  margin-bottom: 12px; /* reduce gap */
+}
+
+/* Subheading */
+.hero p {
+  font-size: 16px; /* smaller + cleaner */
+  max-width: 500px;
+  margin: 0 auto; /* center align */
+  line-height: 1.5;
+  opacity: 0.85;
+}
+
+/* Optional: Make it even tighter on mobile */
+@media (max-width: 768px) {
+  .hero {
+    padding: 40px 15px;
+  }
+
+  .hero h1 {
+    font-size: 30px;
+    margin-bottom: 10px;
+  }
+
+  .hero p {
+    font-size: 14px;
+  }
+}
