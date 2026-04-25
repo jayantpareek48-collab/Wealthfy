@@ -1,12 +1,69 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Wealthfy</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wealthfy</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="logo">Wealth<span>fy</span></div>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#tools">Tools</a>
+    <a href="#">Learn</a>
+    <a href="#">About</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Master Your Money Smartly</h1>
+  <p>SIP Calculator • Goal Planner • Saving Tracker</p>
+  <button class="cta" onclick="scrollToTools()">Start Learning</button>
+</section>
+
+<!-- TOOLS -->
+<section id="tools" class="tools">
+  <h2>Financial Tools</h2>
+
+  <div class="cards">
+    <div class="card" onclick="openModal('sip')">
+      <h3>SIP Calculator</h3>
+    </div>
+
+    <div class="card" onclick="openModal('goal')">
+      <h3>Goal Planner</h3>
+    </div>
+
+    <div class="card" onclick="openModal('save')">
+      <h3>Saving Tracker</h3>
+    </div>
+  </div>
+</section>
+
+<!-- SIP MODAL -->
+<div id="sipModal" class="modal">
+  <div class="modal-box">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2>SIP Calculator</h2>
+
+    <input type="number" id="amount" placeholder="Monthly Investment (₹)">
+    <input type="number" id="rate" placeholder="Expected Return (%)">
+    <input type="number" id="years" placeholder="Years">
+
+    <button onclick="calculateSIP()">Calculate</button>
+
+    <p id="result"></p>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
 </html>
