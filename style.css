@@ -13,8 +13,8 @@ body {
   line-height: 1.6;
 }
 
-/* NAVBAR */
-.navbar {
+/* NAVBAR (fix for header tag) */
+header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -26,16 +26,16 @@ body {
   z-index: 1000;
 }
 
-.logo {
-  font-size: 30px;
+header h1 {
+  font-size: 28px;
   font-weight: 600;
-  letter-spacing: 1px;
 }
 
-.logo span {
+header h1 span {
   color: #00d4a5;
 }
 
+/* NAV LINKS */
 nav {
   display: flex;
   gap: 30px;
@@ -44,8 +44,7 @@ nav {
 nav a {
   text-decoration: none;
   color: #cfd8ff;
-  font-size: 17px;
-  font-weight: 500;
+  font-size: 16px;
   position: relative;
   transition: 0.3s;
 }
@@ -54,7 +53,6 @@ nav a:hover {
   color: #00d4a5;
 }
 
-/* underline animation */
 nav a::after {
   content: "";
   position: absolute;
@@ -70,9 +68,16 @@ nav a:hover::after {
   width: 100%;
 }
 
+/* SECTIONS */
+section {
+  padding: 80px 20px;
+  max-width: 1100px;
+  margin: auto;
+  text-align: center;
+}
+
 /* HERO */
 .hero {
-  text-align: center;
   padding: 120px 20px;
   background: linear-gradient(135deg, #0b0f1a, #0f1c3f, #0b3d2e);
   animation: fadeIn 1s ease;
@@ -80,7 +85,6 @@ nav a:hover::after {
 
 .hero h1 {
   font-size: 48px;
-  color: #ffffff;
 }
 
 .hero p {
@@ -89,135 +93,33 @@ nav a:hover::after {
   color: #aab3ff;
 }
 
-.hero button {
-  margin-top: 25px;
-  padding: 14px 26px;
-  background: #00d4a5;
-  color: black;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: 0.3s;
-}
-
-.hero button:hover {
-  transform: scale(1.08);
-  box-shadow: 0 0 20px #00d4a5;
-}
-
-/* FEATURES */
-.features {
-  padding: 70px 20px;
-  text-align: center;
-}
-
-.features h2 {
-  font-size: 30px;
-  margin-bottom: 30px;
-}
-
-.feature-box {
+/* TOOLS GRID */
+#tools {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 25px;
-  flex-wrap: wrap;
 }
 
-.feature-box div {
-  background: rgba(255,255,255,0.05);
-  padding: 25px;
-  border-radius: 15px;
-  width: 200px;
-  backdrop-filter: blur(10px);
-  transition: 0.3s;
-}
-
-.feature-box div:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 0 15px rgba(0,212,165,0.3);
-}
-
-/* TOOLS */
-.tools {
-  padding: 80px 20px;
-  text-align: center;
-}
-
-.tools h2 {
-  font-size: 30px;
-  margin-bottom: 40px;
-}
-
-.cards {
-  display: flex;
-  justify-content: center;
-  gap: 25px;
-  flex-wrap: wrap;
-}
-
-.card {
+/* TOOL BOX (fix from .card/.box mismatch) */
+.box {
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.08);
-  padding: 30px;
-  border-radius: 18px;
-  width: 240px;
-  cursor: pointer;
+  padding: 25px;
+  border-radius: 16px;
+  width: 280px;
   backdrop-filter: blur(12px);
   transition: 0.3s;
 }
 
-.card h3 {
-  margin-bottom: 10px;
-}
-
-.card p {
-  font-size: 14px;
-  color: #aab3ff;
-}
-
-.card:hover {
+.box:hover {
   transform: translateY(-10px);
   box-shadow: 0 0 25px rgba(0,212,165,0.25);
 }
 
-/* LEARN */
-.learn {
-  text-align: center;
-  padding: 70px 20px;
-}
-
-.learn h2 {
-  font-size: 28px;
-}
-
-/* MODAL */
-.modal {
-  display: none;
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.7);
-  top: 0;
-  left: 0;
-}
-
-.modal-box {
-  background: #12182b;
-  padding: 25px;
-  width: 320px;
-  margin: 120px auto;
-  border-radius: 12px;
-  text-align: center;
-  animation: fadeIn 0.5s ease;
-}
-
-.modal-box h2 {
-  margin-bottom: 10px;
-}
-
-.modal-box input {
-  width: 100%;
+/* INPUTS */
+input {
+  width: 90%;
   padding: 10px;
   margin: 8px 0;
   background: #0b0f1a;
@@ -226,26 +128,34 @@ nav a:hover::after {
   border-radius: 6px;
 }
 
-.modal-box button {
+/* BUTTON */
+button {
+  padding: 10px 20px;
+  border: none;
   background: #00d4a5;
   color: black;
-  border: none;
-  padding: 10px;
-  width: 100%;
-  margin-top: 10px;
+  border-radius: 8px;
   cursor: pointer;
-  border-radius: 6px;
+  transition: 0.3s;
 }
 
-#result {
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #00d4a5;
+}
+
+/* RESULT TEXT */
+.box p {
   margin-top: 10px;
   color: #00d4a5;
+  font-weight: bold;
 }
 
-.close {
-  float: right;
-  cursor: pointer;
-  font-size: 20px;
+/* INFO SECTIONS */
+#learn, #about, #privacy, #terms {
+  background: rgba(255,255,255,0.05);
+  border-radius: 12px;
+  margin-bottom: 20px;
 }
 
 /* FOOTER */
@@ -264,9 +174,9 @@ footer {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* RESPONSIVE */
+/* MOBILE */
 @media (max-width: 768px) {
-  .navbar {
+  header {
     padding: 15px 20px;
   }
 
@@ -276,5 +186,9 @@ footer {
 
   nav {
     gap: 15px;
+  }
+
+  .box {
+    width: 90%;
   }
 }
