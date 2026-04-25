@@ -1,1 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Wealthfy SaaS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial;
+}
+
+body{
+  background:#0b1220;
+  color:white;
+}
+
+/* LOGIN PAGE */
+.login{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.box{
+  width:320px;
+  background:#111a2e;
+  padding:25px;
+  border-radius:12px;
+  box-shadow:0 0 20px rgba(0,0,0,0.4);
+}
+
+h2{
+  margin-bottom:15px;
+  color:#38bdf8;
+}
+
+input{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+  border:none;
+  border-radius:8px;
+  background:#1e293b;
+  color:white;
+  outline:none;
+}
+
+button{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  border:none;
+  border-radius:8px;
+  background:#38bdf8;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+/* DASHBOARD */
+.dashboard{
+  display:none;
+}
+
+/* NAVBAR */
+nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 25px;
+  background:#111a2e;
+  border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+.logo{
+  color:#38bdf8;
+  font-weight:bold;
+}
+
+.logout{
+  background:#ef4444;
+  width:auto;
+  padding:8px 12px;
+}
+
+/* CONTENT */
+.container{
+  padding:25px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:15px;
+  margin-top:20px;
+}
+
+.card{
+  background:#111a2e;
+  padding:20px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.05);
+}
+
+.card h3{
+  color:#38bdf8;
+  margin-bottom:10px;
+}
+
+.result{
+  margin-top:10px;
+  color:#a3a3a3;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div class="login" id="loginPage">
+
+<div class="box">
+<h2>Wealthfy Login</h2>
+
+<input id="email" placeholder="Enter Email">
+<input id="pass" type="password" placeholder="Enter Password">
+
+<button onclick="login()">Login</button>
+<button onclick="signup()" style="background:#1e293b;">Sign Up</button>
+
+</div>
+
+</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard" id="dashboard">
+
+<nav>
+<div class="logo">Wealthfy SaaS</div>
+<button class="logout" onclick="logout()">Logout</button>
+</nav>
+
+<div class="container">
+
+<h2>Welcome, <span id="user"></span></h2>
+
+<div class="grid">
+
+<!-- SIP -->
+<div class="card">
+<h3>SIP Calculator</h3>
+<input id="p" placeholder="Monthly Investment">
+<input id="r" placeholder="Return %">
+<input id="t" placeholder="Years">
+<button onclick="sip()">Calculate</button>
+<div class="result" id="r1"></div>
+</div>
+
+<!-- GOAL -->
+<div class="card">
+<h3>Goal Planner</h3>
+<input id="g" placeholder="Goal Amount">
+<input id="y" placeholder="Years">
+<button onclick="goal()">Calculate</button>
+<div class="result" id="r2"></div>
+</div>
+
+<!-- SAVINGS -->
+<div class="card">
+<h3>Saving Tracker</h3>
+<input id="i" placeholder="Income">
+<input id="e" placeholder="Expense">
+<button onclick="save()">Calculate</button>
+<div class="result" id="r3"></div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+/* SIMPLE FRONTEND LOGIN SYSTEM (NOT SECURE) */
+
+function signup(){
+  localStorage.setItem(email.value, pass.value);
+  alert("Account Created (Demo)");
+}
+
+function login(){
+  let stored = localStorage.getItem(email.value);
+
+  if(stored && stored === pass.value){
+    localStorage.setItem("user", email.value);
+    showDashboard();
+  } else {
+    alert("Invalid Login");
+  }
+}
+
+function showDashboard(){
+  document.getElementById("loginPage").style.display="none";
+  document.getElementById("dashboard").style.display="block";
+  document.getElementById("user").innerText = localStorage.getItem("user");
+}
+
+function logout(){
+  localStorage.removeItem("user");
+  location.reload();
+}
+
+/* CALCULATORS */
+
+function sip(){
+  let P = +p.value;
+  let R = (+r.value)/100/12;
+  let N = (+t.value)*12;
+
+  let fv = P * ((Math.pow(1+R,N)-1)/R)*(1+R);
+  r1.innerText = "Future Value: ₹ " + Math.round(fv);
+}
+
+function goal(){
+  r2.innerText = "Monthly Saving: ₹ " + Math.round(g.value/(y.value*12));
+}
+
+function save(){
+  r3.innerText = "Savings: ₹ " + (i.value - e.value);
+}
+
+/* AUTO LOGIN */
+if(localStorage.getItem("user")){
+  showDashboard();
+}
+
+</script>
+
+</body>
+</html>
