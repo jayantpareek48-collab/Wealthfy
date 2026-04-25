@@ -2,96 +2,200 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <title>Wealthify</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wealthfy</title>
-  <link rel="stylesheet" href="style.css">
 
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0b1c2c;
+      color: white;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      padding: 15px 30px;
+      background: #081520;
+      position: sticky;
+      top: 0;
+    }
+
+    header h1 {
+      color: #00d09c;
+    }
+
+    nav a {
+      margin: 0 10px;
+      color: white;
+      text-decoration: none;
+    }
+
+    section {
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    .hero {
+      height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .box {
+      background: #112b44;
+      margin: 10px;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    input, button {
+      padding: 10px;
+      margin: 5px;
+      border-radius: 5px;
+      border: none;
+    }
+
+    button {
+      background: #00d09c;
+      color: black;
+      cursor: pointer;
+    }
+
+    footer {
+      background: #081520;
+      padding: 20px;
+      text-align: center;
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- NAVBAR -->
-<header class="navbar">
-  <div class="logo">Wealth<span>fy</span></div>
+<header>
+  <h1>Wealthify</h1>
   <nav>
-    <a href="#">Home</a>
     <a href="#tools">Tools</a>
-    <a href="#">Learn</a>
-    <a href="#">About</a>
+    <a href="#learn">Learn</a>
+    <a href="#about">About</a>
+    <a href="#privacy">Privacy</a>
+    <a href="#terms">Terms</a>
   </nav>
 </header>
 
 <!-- HERO -->
 <section class="hero">
-  <h1>Master Your Money Smartly</h1>
-  <p>SIP Calculator • Goal Planner • Saving Tracker</p>
-  <button class="cta" onclick="scrollToTools()">Start Learning</button>
+  <h1>Grow Your Money Smartly</h1>
+  <p>Simple tools for students to learn finance and build wealth</p>
 </section>
 
 <!-- TOOLS -->
-<section id="tools" class="tools">
+<section id="tools">
   <h2>Financial Tools</h2>
 
-  <div class="cards">
-    <div class="card" onclick="openModal('sip')">
-      <h3>SIP Calculator</h3>
-    </div>
-
-    <div class="card" onclick="openModal('goal')">
-      <h3>Goal Planner</h3>
-    </div>
-
-    <div class="card" onclick="openModal('save')">
-      <h3>Saving Tracker</h3>
-    </div>
-  </div>
-</section>
-
-<!-- SIP MODAL -->
-<div id="sipModal" class="modal">
-  <div class="modal-box">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <h2>SIP Calculator</h2>
-
-    <input type="number" id="amount" placeholder="Monthly Investment (₹)">
-    <input type="number" id="rate" placeholder="Expected Return (%)">
-    <input type="number" id="years" placeholder="Years">
-
+  <div class="box">
+    <h3>SIP Calculator</h3>
+    <input id="sipAmount" placeholder="Monthly Investment">
+    <input id="sipRate" placeholder="Interest Rate (%)">
+    <input id="sipTime" placeholder="Years">
     <button onclick="calculateSIP()">Calculate</button>
-
-    <p id="result"></p>
+    <p id="sipResult"></p>
   </div>
-</div>
-<!-- GOAL PLANNER -->
-<div id="goalModal" class="modal">
-  <div class="modal-box">
-    <span onclick="closeModal()" class="close">&times;</span>
-    <h2>Goal Planner</h2>
 
-    <input type="number" id="goalAmount" placeholder="Target Amount (₹)">
-    <input type="number" id="goalYears" placeholder="Years">
-
-    <button onclick="calculateGoal()">Calculate</button>
-
+  <div class="box">
+    <h3>Goal Planner</h3>
+    <input id="goalAmount" placeholder="Target Amount">
+    <input id="goalYears" placeholder="Years">
+    <button onclick="calculateGoal()">Plan</button>
     <p id="goalResult"></p>
   </div>
-</div>
 
-<!-- SAVING TRACKER -->
-<div id="saveModal" class="modal">
-  <div class="modal-box">
-    <span onclick="closeModal()" class="close">&times;</span>
-    <h2>Saving Tracker</h2>
-
-    <input type="number" id="income" placeholder="Monthly Income (₹)">
-    <input type="number" id="expenses" placeholder="Monthly Expenses (₹)">
-
+  <div class="box">
+    <h3>Saving Tracker</h3>
+    <input id="saveMonthly" placeholder="Monthly Saving">
+    <input id="saveMonths" placeholder="Months">
     <button onclick="calculateSaving()">Track</button>
-
     <p id="saveResult"></p>
   </div>
-</div>
-<script src="script.js"></script>
+
+</section>
+
+<!-- LEARN -->
+<section id="learn">
+  <h2>Learn Finance</h2>
+  <p>Understand SIP, investing, and money management in simple language.</p>
+</section>
+
+<!-- TRUST -->
+<section>
+  <h2>Why Wealthify?</h2>
+  <p>Beginner-friendly tools designed for students.</p>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <h2>About Wealthify</h2>
+  <p>
+    Wealthify helps beginners understand finance, plan goals, and build smart money habits.
+  </p>
+</section>
+
+<!-- ABOUT ME -->
+<section>
+  <h2>About the Creator</h2>
+  <p>
+    I built Wealthify to make finance simple for students and beginners.
+  </p>
+</section>
+
+<!-- PRIVACY -->
+<section id="privacy">
+  <h2>Privacy Policy</h2>
+  <p>
+    We do not collect personal data. All calculations happen in your browser.
+  </p>
+</section>
+
+<!-- TERMS -->
+<section id="terms">
+  <h2>Terms & Conditions</h2>
+  <p>
+    This platform is for educational purposes only and does not provide financial advice.
+  </p>
+</section>
+
+<footer>
+  <p>© 2026 Wealthify</p>
+</footer>
+
+<script>
+function calculateSIP() {
+  let P = document.getElementById("sipAmount").value;
+  let r = document.getElementById("sipRate").value / 100 / 12;
+  let n = document.getElementById("sipTime").value * 12;
+
+  let result = P * ((Math.pow(1 + r, n) - 1) / r) * (1 + r);
+  document.getElementById("sipResult").innerText = "Future Value: ₹" + Math.round(result);
+}
+
+function calculateGoal() {
+  let amount = document.getElementById("goalAmount").value;
+  let years = document.getElementById("goalYears").value;
+
+  let monthly = amount / (years * 12);
+  document.getElementById("goalResult").innerText = "You need ₹" + Math.round(monthly) + "/month";
+}
+
+function calculateSaving() {
+  let monthly = document.getElementById("saveMonthly").value;
+  let months = document.getElementById("saveMonths").value;
+
+  let total = monthly * months;
+  document.getElementById("saveResult").innerText = "Total Savings: ₹" + total;
+}
+</script>
+
 </body>
 </html>
