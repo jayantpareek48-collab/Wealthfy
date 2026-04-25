@@ -54,22 +54,83 @@
 <header class="navbar">
   <div class="container nav-inner">
 
-    <!-- LEFT: BRAND -->
-    <a class="brand" href="#home">Wealth<span>fy</span></a>
+    <!-- LEFT -->
+    <div class="nav-left">
+      <a class="brand" href="#home">Wealth<span>fy</span></a>
+    </div>
 
-    <!-- MIDDLE: MENU -->
+    <!-- CENTER -->
     <ul class="nav-links">
       <li><a href="#home">Home</a></li>
       <li><a href="#calculators">Calculator</a></li>
       <li><a href="#game">Game</a></li>
     </ul>
 
-    <!-- RIGHT: LOGIN -->
-    <a href="login.html" class="login-btn">Login</a>
+    <!-- RIGHT -->
+    <div class="nav-right">
+      <a href="login.html" class="login-btn">Login</a>
+    </div>
 
   </div>
-</header>
-      
+</header>.nav-inner {
+    display: flex;
+    align-items: center;
+}
+
+/* LEFT */
+.nav-left {
+    flex: 1;
+}
+
+/* CENTER */
+.nav-links {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* RIGHT */
+.nav-right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* BRAND */
+.brand {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+}
+
+/* LINKS */
+.nav-links a {
+    color: #94a3b8;
+    text-decoration: none;
+}
+
+.nav-links a:hover {
+    color: #22c55e;
+}
+
+/* LOGIN BUTTON */
+.login-btn {
+    background: white;
+    color: #0b3d91;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.login-btn:hover {
+    background: #e6f0ff;
+}
 </header>
       .nav-inner {
         display: flex;
