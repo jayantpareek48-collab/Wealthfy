@@ -7,188 +7,163 @@
 
 /* BODY */
 body {
-  font-family: 'Poppins', sans-serif;
-  background: #0b0f1a;
-  color: #e6f0ff;
-  line-height: 1.6;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #0b1c2c, #07121a);
+  color: #e6edf3;
 }
 
-/* NAVBAR (fix for header tag) */
+/* NAVBAR */
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 60px;
-  background: rgba(10, 15, 30, 0.85);
-  backdrop-filter: blur(12px);
+  padding: 18px 40px;
+  background: rgba(8, 21, 32, 0.8);
+  backdrop-filter: blur(10px);
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
 header h1 {
-  font-size: 28px;
-  font-weight: 600;
-}
-
-header h1 span {
-  color: #00d4a5;
-}
-
-/* NAV LINKS */
-nav {
-  display: flex;
-  gap: 30px;
+  color: #00d09c;
+  font-size: 24px;
 }
 
 nav a {
+  margin-left: 20px;
+  color: #cbd5e1;
   text-decoration: none;
-  color: #cfd8ff;
-  font-size: 16px;
-  position: relative;
+  font-size: 15px;
   transition: 0.3s;
 }
 
 nav a:hover {
-  color: #00d4a5;
-}
-
-nav a::after {
-  content: "";
-  position: absolute;
-  width: 0%;
-  height: 2px;
-  left: 0;
-  bottom: -6px;
-  background: #00d4a5;
-  transition: 0.3s;
-}
-
-nav a:hover::after {
-  width: 100%;
-}
-
-/* SECTIONS */
-section {
-  padding: 80px 20px;
-  max-width: 1100px;
-  margin: auto;
-  text-align: center;
+  color: #00d09c;
 }
 
 /* HERO */
 .hero {
-  padding: 120px 20px;
-  background: linear-gradient(135deg, #0b0f1a, #0f1c3f, #0b3d2e);
-  animation: fadeIn 1s ease;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at top, #123a5a, #07121a);
+  text-align: center;
+  padding: 20px;
 }
 
 .hero h1 {
-  font-size: 48px;
+  font-size: 42px;
+  margin-bottom: 10px;
 }
 
 .hero p {
-  margin-top: 10px;
   font-size: 18px;
-  color: #aab3ff;
+  color: #94a3b8;
 }
 
-/* TOOLS GRID */
+/* SECTION */
+section {
+  padding: 80px 40px;
+  text-align: center;
+}
+
+/* 🔥 TOOLS LAYOUT */
 #tools {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  gap: 25px;
+  gap: 30px;
+  flex-wrap: wrap;
 }
 
-/* TOOL BOX (fix from .card/.box mismatch) */
+/* CARD STYLE */
 .box {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.08);
-  padding: 25px;
-  border-radius: 16px;
-  width: 280px;
+  background: rgba(17, 43, 68, 0.7);
   backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 30px 20px;
+  width: 300px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
   transition: 0.3s;
+  border: 1px solid rgba(255,255,255,0.05);
 }
 
+/* HOVER EFFECT */
 .box:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 0 25px rgba(0,212,165,0.25);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.6);
 }
 
-/* INPUTS */
+/* HEADINGS */
+.box h3 {
+  margin-bottom: 15px;
+  color: #00d09c;
+}
+
+/* INPUT */
 input {
   width: 90%;
   padding: 10px;
   margin: 8px 0;
-  background: #0b0f1a;
-  border: 1px solid #333;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  background: #0b1c2c;
   color: white;
-  border-radius: 6px;
 }
 
 /* BUTTON */
 button {
-  padding: 10px 20px;
-  border: none;
-  background: #00d4a5;
-  color: black;
+  padding: 10px 16px;
   border-radius: 8px;
+  border: none;
+  background: linear-gradient(135deg, #00d09c, #00ffa3);
+  color: black;
+  font-weight: bold;
   cursor: pointer;
+  margin-top: 10px;
   transition: 0.3s;
 }
 
 button:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 15px #00d4a5;
 }
 
 /* RESULT TEXT */
-.box p {
+p {
   margin-top: 10px;
-  color: #00d4a5;
-  font-weight: bold;
+  color: #94a3b8;
 }
 
-/* INFO SECTIONS */
-#learn, #about, #privacy, #terms {
-  background: rgba(255,255,255,0.05);
-  border-radius: 12px;
-  margin-bottom: 20px;
+/* OTHER SECTIONS */
+section h2 {
+  margin-bottom: 15px;
+  font-size: 28px;
+}
+
+section p {
+  max-width: 600px;
+  margin: auto;
 }
 
 /* FOOTER */
 footer {
-  text-align: center;
+  background: #081520;
   padding: 25px;
-  background: #0f1c3f;
-  margin-top: 50px;
-  font-size: 14px;
-  color: #aaa;
+  text-align: center;
+  color: #94a3b8;
 }
 
-/* ANIMATION */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* MOBILE */
+/* 📱 MOBILE */
 @media (max-width: 768px) {
-  header {
-    padding: 15px 20px;
-  }
-
   .hero h1 {
-    font-size: 32px;
+    font-size: 30px;
   }
 
-  nav {
-    gap: 15px;
-  }
-
-  .box {
-    width: 90%;
+  #tools {
+    flex-direction: column;
+    align-items: center;
   }
 }
