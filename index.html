@@ -63,7 +63,35 @@
     <p id="result"></p>
   </div>
 </div>
+<!-- GOAL PLANNER -->
+<div id="goalModal" class="modal">
+  <div class="modal-box">
+    <span onclick="closeModal()" class="close">&times;</span>
+    <h2>Goal Planner</h2>
 
+    <input type="number" id="goalAmount" placeholder="Target Amount (₹)">
+    <input type="number" id="goalYears" placeholder="Years">
+
+    <button onclick="calculateGoal()">Calculate</button>
+
+    <p id="goalResult"></p>
+  </div>
+</div>
+
+<!-- SAVING TRACKER -->
+<div id="saveModal" class="modal">
+  <div class="modal-box">
+    <span onclick="closeModal()" class="close">&times;</span>
+    <h2>Saving Tracker</h2>
+
+    <input type="number" id="income" placeholder="Monthly Income (₹)">
+    <input type="number" id="expenses" placeholder="Monthly Expenses (₹)">
+
+    <button onclick="calculateSaving()">Track</button>
+
+    <p id="saveResult"></p>
+  </div>
+</div>
 <script src="script.js"></script>
 </body>
 </html>
