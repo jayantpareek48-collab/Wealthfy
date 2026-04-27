@@ -3,11 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wealthfy</title>
+
+<title>₹Wealthfy</title>
 
 <link rel="stylesheet" href="style.css">
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://unpkg.com/lottie-web@5.12.2/build/player/lottie.min.js"></script>
@@ -16,78 +17,27 @@
 <body>
 
 <!-- NAV -->
-<div class="navbar glass">
-  <div class="logo">Wealthfy</div>
+<nav class="navbar glass">
+  <div class="logo">₹Wealthfy</div>
   <div class="nav-links">
-    <a href="#">Learn</a>
-    <a href="#tools">Tools</a>
-    <a href="#quiz">Quiz</a>
-    <a href="#">Contact</a>
+    <span onclick="navigate('home')">Home</span>
+    <span onclick="navigate('tools')">Tools</span>
+    <span onclick="navigate('quiz')">Quiz</span>
+    <span onclick="navigate('about')">Contact</span>
   </div>
-</div>
+</nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-text">
-    <h1>Future of Finance Learning</h1>
-    <p>Interactive tools + gamified investing education</p>
-    <button onclick="scrollToTools()">Explore</button>
-  </div>
-  <div id="lottie-animation"></div>
-</section>
+<!-- APP -->
+<div id="app"></div>
 
-<!-- TOOLS -->
-<section id="tools" class="cards">
-
-  <div class="card" onclick="openTool('sip')">
-    <h3>SIP Calculator</h3>
-  </div>
-
-  <div class="card" onclick="openTool('saving')">
-    <h3>Savings Growth</h3>
-  </div>
-
-</section>
-
-<!-- TOOL SECTION -->
-<section id="toolSection" style="display:none;">
-
-<button class="back" onclick="closeTool()">← Back</button>
-
-<div id="sip" class="tool">
-  <h2>SIP Calculator</h2>
-  <input id="sipAmount" type="number" placeholder="Monthly ₹">
-  <input id="sipRate" type="number" placeholder="Return %">
-  <input id="sipYears" type="number" placeholder="Years">
-  <button onclick="calcSIP()">Calculate</button>
-  <p id="sipResult"></p>
-</div>
-
-<div id="saving" class="tool">
-  <h2>Savings Graph</h2>
-  <input id="saveAmount" type="number" placeholder="Monthly Saving ₹">
-  <input id="saveYears" type="number" placeholder="Years">
-  <button onclick="generateGraph()">Generate</button>
-</div>
-
-<canvas id="chart"></canvas>
-
-</section>
-
-<!-- QUIZ -->
-<section id="quiz" class="quiz glass">
-  <h2>Finance Quiz</h2>
-
-  <div class="progress-bar">
-    <div id="progress"></div>
-  </div>
-
-  <div id="quizContainer"></div>
-
-  <button onclick="submitQuiz()">Submit</button>
-
-  <p id="quizResult"></p>
-</section>
+<!-- FOOTER -->
+<footer>
+  <p>Email: jayantpareek48@gmail.com</p>
+  <p>Phone: +91 96606 95670</p>
+  <p>Sikar, Rajasthan 🇮🇳</p>
+  <p class="badge">Made in India</p>
+  <p class="small">Educational Purpose Only</p>
+</footer>
 
 <script src="script.js"></script>
 </body>
