@@ -1,78 +1,121 @@
-// Lottie Animation
-lottie.loadAnimation({
-  container: document.getElementById("animation"),
-  renderer: "svg",
-  loop: true,
-  autoplay: true,
-  path: "https://assets2.lottiefiles.com/packages/lf20_qp1q7mct.json"
-});
+// ================= SIP CALCULATOR =================
+function calculateSIP() {
+    let P = parseFloat(document.getElementById("sipAmount").value);
+    let r = parseFloat(document.getElementById("sipRate").value) / 100 / 12;
+    let n = parseFloat(document.getElementById("sipTime").value) * 12;
 
-// Scroll
-function scrollToTools() {
-  document.getElementById("tools").scrollIntoView({ behavior: "smooth" });
+    if (!P || !r || !n) {
+        alert("Please enter valid inputs");
+        return;
+    }
+
+    let futureValue = P * ((Math.pow(1 + r, n) - 1) / r) * (1 + r);
+    let invested = P * n;
+    let gain = futureValue - invested;
+
+    document.getElementById("sipResult").innerText =
+        `Invested: ₹${invested.toFixed(0)} | Wealth: ₹${futureValue.toFixed(0)} | Gain: ₹${gain.toFixed(0)}`;
 }
 
-// Open Tool
-function openTool(id) {
-  document.getElementById("toolSection").style.display = "block";
+// ================= SAVINGS GRAPH =================
+let chart;
 
-  document.querySelectorAll(".tool").forEach(t => t.style.display = "none");
+function generateGraph() {
+    let amount = parseFloat(document.getElementById("saveAmount").value);
+    let years = parseFloat(document.getElementById("saveYears").value);
 
-  document.getElementById(id).style.display = "block";
+    if (!amount || !years) {
+        alert("Enter valid data");
+        return;
+    }
+
+    let data = [];
+    let labels = [];
+    let total = 0;
+
+    for (let i = 1; i <= years * 12; i++) {
+        total += amount;
+        data.push(total);
+        labels.push(`M${i}`);
+    }
+
+    if (chart) chart.destroy();
+
+    let ctx = document.getElementById("chartCanvas").getContext("2d");
+
+    chart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "Savings Growth",
+                data: data,
+                borderWidth: 3,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
 }
 
-// Close Tool
-function closeTool() {
-  document.getElementById("toolSection").style.display = "none";
+// ================= QUIZ =================
+const questions = [
+    { q: "What is SIP?", a: "investment" },
+    { q: "Inflation means?", a: "price increase" },
+    { q: "FD stands for?", a: "fixed deposit" },
+    { q: "Stock market is?", a: "trading" },
+    { q: "Risk means?", a: "uncertainty" }
+];
+
+function loadQuiz() {
+    let container = document.getElementById("quizContainer");
+    container.innerHTML = "";
+
+    questions.forEach((q, i) => {
+        container.innerHTML += `
+            <p>${i+1}. ${q.q}</p>
+            <input type="text" id="q${i}" class="input">
+        `;
+    });
 }
 
-// Chart
-let chart = new Chart(document.getElementById("chart"), {
-  type: "line",
-  data: { labels: [], datasets: [{ label: "₹ Growth", data: [] }] }
-});
+function submitQuiz() {
+    let score = 0;
 
-// SIP
-function calcSIP() {
-  let P = +sipAmount.value;
-  let r = +sipRate.value / 100 / 12;
-  let n = +sipYears.value * 12;
+    questions.forEach((q, i) => {
+        let ans = document.getElementById(`q${i}`).value.toLowerCase();
+        if (ans.includes(q.a)) score++;
+    });
 
-  let total = 0, data = [];
+    let percent = (score / questions.length) * 100;
 
-  for (let i = 1; i <= n; i++) {
-    total = (total + P) * (1 + r);
-    data.push(Math.round(total));
-  }
+    let result = document.getElementById("quizResult");
 
-  chart.data.labels = data.map((_, i) => i + 1);
-  chart.data.datasets[0].data = data;
-  chart.update();
-
-  sipResult.innerText = "Future Value: ₹ " + Math.round(total);
+    if (percent > 70) {
+        result.innerText = `Passed 🎉 (${percent}%)`;
+        confetti();
+    } else {
+        result.innerText = `Try Again ❌ (${percent}%)`;
+    }
 }
 
-// Goal
-function calcGoal() {
-  let goal = +goalAmount.value;
-  let years = +goalYears.value;
+// ================= CONFETTI =================
+function confetti() {
+    for (let i = 0; i < 50; i++) {
+        let div = document.createElement("div");
+        div.style.position = "fixed";
+        div.style.width = "5px";
+        div.style.height = "5px";
+        div.style.background = "#00F5FF";
+        div.style.top = Math.random() * window.innerHeight + "px";
+        div.style.left = Math.random() * window.innerWidth + "px";
+        document.body.appendChild(div);
 
-  let monthly = goal / (years * 12);
-
-  goalResult.innerText = "Monthly SIP Needed: ₹ " + Math.round(monthly);
-
-  chart.data.labels = ["Goal"];
-  chart.data.datasets[0].data = [goal];
-  chart.update();
+        setTimeout(() => div.remove(), 2000);
+    }
 }
 
-// Saving
-function calcSaving() {
-  let save = income.value - expense.value;
-
-  savingResult.innerText = "Monthly Saving: ₹ " + save;
-
-  chart.data.labels = ["Saving"];
-  chart.data.datasets[0].data = [save];
-  chart.update();
-}
+// INIT
+loadQuiz();
