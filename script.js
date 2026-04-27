@@ -1,6 +1,4 @@
 // ===== FIREBASE SETUP =====
-
-// Your Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyAGuTnP1UVnOFF8yRD3_4TUF8tqjWaaVcI",
   authDomain: "wealthfy-59f90.firebaseapp.com",
@@ -11,14 +9,57 @@ const firebaseConfig = {
   measurementId: "G-BG0J6007BS"
 };
 
-// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-// Services
 const auth = firebase.auth();
 const db = firebase.firestore();
 
 console.log("Firebase Connected ✅");
+
+
+// ===== AUTH SYSTEM =====
+
+// SIGN UP
+function signup(){
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  auth.createUserWithEmailAndPassword(email, password)
+    .then(() => {
+      document.getElementById("userStatus").innerText = "Signup Successful ✅";
+    })
+    .catch(err => {
+      document.getElementById("userStatus").innerText = err.message;
+    });
+}
+
+// LOGIN
+function login(){
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  auth.signInWithEmailAndPassword(email, password)
+    .then(() => {
+      document.getElementById("userStatus").innerText = "Login Successful 🚀";
+    })
+    .catch(err => {
+      document.getElementById("userStatus").innerText = err.message;
+    });
+}
+
+// LOGOUT
+function logout(){
+  auth.signOut().then(() => {
+    document.getElementById("userStatus").innerText = "Logged Out";
+  });
+}
+
+// AUTO USER DETECT
+auth.onAuthStateChanged(user => {
+  if(user && document.getElementById("userStatus")){
+    document.getElementById("userStatus").innerText = "Logged in as: " + user.email;
+  }
+});
 
 
 // ===== ROUTING =====
@@ -30,6 +71,19 @@ function navigate(page){
       <section class="hero">
         <h1>Future of Finance Learning</h1>
         <p>Interactive tools + gamified investing education</p>
+
+        <div class="auth-box glass">
+          <h3>Login / Signup</h3>
+
+          <input id="email" placeholder="Email">
+          <input id="password" type="password" placeholder="Password">
+
+          <button onclick="signup()">Sign Up</button>
+          <button onclick="login()">Login</button>
+          <button onclick="logout()">Logout</button>
+
+          <p id="userStatus"></p>
+        </div>
       </section>
     `;
   }
@@ -67,6 +121,7 @@ function navigate(page){
   }
 }
 
+
 // ===== SIP =====
 function calc(){
   let P=+amount.value;
@@ -76,6 +131,7 @@ function calc(){
   let FV=P*((Math.pow(1+r,n)-1)/r)*(1+r);
   result.innerText="Future Value ₹ "+Math.round(FV);
 }
+
 
 // ===== QUIZ ENGINE =====
 let currentQ=0, level=1, score=0;
@@ -144,13 +200,19 @@ function finish(){
     </div>
   `;
 
-  // 🔥 SAVE SCORE TO FIREBASE
-  db.collection("quizScores").add({
-    score: percent,
-    level: level,
-    time: new Date()
-  });
+  // SAVE USER SCORE
+  if(auth.currentUser){
+    db.collection("users")
+      .doc(auth.currentUser.uid)
+      .collection("scores")
+      .add({
+        score: percent,
+        level: level,
+        time: new Date()
+      });
+  }
 }
+
 
 // INIT
 navigate('home');
