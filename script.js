@@ -1,172 +1,126 @@
-// ===== NAV =====
-function scrollToTools() {
-  document.getElementById("tools").scrollIntoView({behavior:"smooth"});
-}
+// ===== ROUTING =====
+function navigate(page){
+  const app = document.getElementById("app");
 
-function openTool(id){
-  document.getElementById("toolSection").style.display="block";
-  document.querySelectorAll(".tool").forEach(t=>t.style.display="none");
-  document.getElementById(id).style.display="block";
-}
-
-function closeTool(){
-  document.getElementById("toolSection").style.display="none";
-}
-
-// ===== LOTTIE =====
-lottie.loadAnimation({
-  container: document.getElementById("lottie-animation"),
-  renderer: "svg",
-  loop: true,
-  autoplay: true,
-  path: "https://assets2.lottiefiles.com/packages/lf20_qp1q7mct.json"
-});
-
-// ===== CHART =====
-let chart;
-
-function generateGraph(){
-  let amount = +saveAmount.value;
-  let years = +saveYears.value;
-
-  let data=[], labels=[], total=0;
-
-  for(let i=1;i<=years*12;i++){
-    total+=amount;
-    data.push(total);
-    labels.push(i);
+  if(page==="home"){
+    app.innerHTML = `
+      <section class="hero">
+        <h1>Future of Finance Learning</h1>
+        <p>Interactive tools + gamified investing education</p>
+      </section>
+    `;
   }
 
-  if(chart) chart.destroy();
+  if(page==="tools"){
+    app.innerHTML = `
+      <div class="tool-box glass">
+        <h2>SIP Calculator</h2>
+        <input id="amount" placeholder="Monthly ₹">
+        <input id="rate" placeholder="Return %">
+        <input id="years" placeholder="Years">
+        <button onclick="calc()">Calculate</button>
+        <p id="result"></p>
+      </div>
 
-  let ctx = document.getElementById("chart").getContext("2d");
+      <canvas id="chart"></canvas>
+    `;
+  }
 
-  let gradient = ctx.createLinearGradient(0,0,0,400);
-  gradient.addColorStop(0,"#00F5FF");
-  gradient.addColorStop(1,"#007BFF");
+  if(page==="quiz"){
+    startQuiz();
+  }
 
-  chart = new Chart(ctx,{
-    type:"line",
-    data:{
-      labels,
-      datasets:[{
-        data,
-        borderColor:gradient,
-        tension:0.4
-      }]
-    }
-  });
+  if(page==="about"){
+    app.innerHTML = `
+      <div class="tool-box glass">
+        <h2>Founder’s Corner</h2>
+        <p>
+        Wealthfy was founded by a 16-year-old entrepreneur and student at Euro School.
+        Driven by a mission to bridge the financial literacy gap, this platform was built
+        to provide free, high-quality financial tools and gamified awareness to everyone.
+        </p>
+      </div>
+    `;
+  }
 }
 
 // ===== SIP =====
-function calcSIP(){
-  let P=+sipAmount.value;
-  let r=+sipRate.value/100/12;
-  let n=+sipYears.value*12;
+function calc(){
+  let P=+amount.value;
+  let r=+rate.value/100/12;
+  let n=+years.value*12;
 
   let FV=P*((Math.pow(1+r,n)-1)/r)*(1+r);
-
-  sipResult.innerText="Future Value ₹ "+Math.round(FV);
+  result.innerText="Future Value ₹ "+Math.round(FV);
 }
 
-// ===== QUIZ SYSTEM =====
+// ===== QUIZ ENGINE =====
+let currentQ=0, level=1, score=0;
 
-let level=1;
-let currentQuestions=[];
-let score=0;
-
-const quizData = {
+const quiz = {
   1:[
-    {q:"What is investing?", options:["Saving","Growing money","Spending","Borrowing"], answer:1},
-    {q:"What is saving?", options:["Investing","Keeping money aside","Trading","Loan"], answer:1},
-    {q:"What is risk?", options:["Profit","Loss chance","Saving","Income"], answer:1},
-    {q:"Inflation?", options:["Price increase","Decrease","Tax","Loan"], answer:0},
-    {q:"Asset?", options:["Liability","Ownership","Expense","Debt"], answer:1}
+    {q:"What is investing?",o:["Saving","Growing money","Spending","Borrowing"],a:1,exp:"Investing grows wealth over time."},
+    {q:"Inflation?",o:["Price rise","Tax","Saving","Loan"],a:0,exp:"Inflation reduces purchasing power."}
   ],
   2:[
-    {q:"Stock represents?", options:["Debt","Ownership","Loan","Saving"], answer:1},
-    {q:"ETF is?", options:["Fund","Loan","Stock","Crypto"], answer:0},
-    {q:"Bond is?", options:["Ownership","Debt","Crypto","ETF"], answer:1},
-    {q:"Dividend?", options:["Tax","Profit share","Loan","Expense"], answer:1},
-    {q:"Market?", options:["Shop","Trading place","Bank","Gov"], answer:1}
+    {q:"ETF?",o:["Loan","Fund","Crypto","Bond"],a:1,exp:"ETF is low-cost index fund."}
   ],
   3:[
-    {q:"Diversification?", options:["Risk spread","Loss","Profit","Tax"], answer:0},
-    {q:"Liquidity?", options:["Ease of selling","Loan","Saving","Tax"], answer:0},
-    {q:"Volatility?", options:["Stable","Fluctuation","Profit","Loss"], answer:1},
-    {q:"Hedging?", options:["Risk protection","Profit","Loan","Saving"], answer:0},
-    {q:"Compound interest?", options:["Simple","Interest on interest","Tax","Loan"], answer:1}
+    {q:"Expense ratio impact?",o:["No effect","Reduces returns","Increase","Tax"],a:1,exp:"Small fees compound into big losses."}
   ]
 };
 
-function loadQuiz(){
-  currentQuestions = quizData[level];
-  let container = document.getElementById("quizContainer");
-  container.innerHTML="";
-
-  currentQuestions.forEach((q,i)=>{
-    let html = `<p>${i+1}. ${q.q}</p>`;
-    q.options.forEach((opt,j)=>{
-      html+=`<div class="option">
-        <input type="radio" name="q${i}" value="${j}"> ${opt}
-      </div>`;
-    });
-    container.innerHTML+=html;
-  });
-
-  updateProgress();
-}
-
-function submitQuiz(){
+function startQuiz(){
+  currentQ=0;
   score=0;
+  renderQ();
+}
 
-  currentQuestions.forEach((q,i)=>{
-    let selected = document.querySelector(`input[name=q${i}]:checked`);
-    if(selected && +selected.value===q.answer) score++;
-  });
+function renderQ(){
+  let q=quiz[level][currentQ];
+  document.getElementById("app").innerHTML = `
+    <div class="quiz-box glass">
+      <h3>${q.q}</h3>
+      ${q.o.map((opt,i)=>`<div class="option" onclick="answer(${i})">${opt}</div>`).join("")}
+      <div id="exp"></div>
+    </div>
+  `;
+}
 
-  let percent = (score/currentQuestions.length)*100;
+function answer(i){
+  let q=quiz[level][currentQ];
+  if(i===q.a) score++;
 
-  if(level===1 && percent>=70){
-    level=2;
-    nextLevel("Level 2 Unlocked 🚀");
-  }
-  else if(level===2 && percent>=71){
-    level=3;
-    nextLevel("Level 3 Unlocked 🔥");
-  }
-  else if(level===3 && percent>=80){
-    nextLevel("You Mastered Finance 🎉");
-  }
-  else{
-    document.getElementById("quizResult").innerText="Try Again ❌";
+  document.getElementById("exp").innerHTML = `
+    <div class="explanation">${q.exp}</div>
+    <button onclick="next()">Next</button>
+  `;
+}
+
+function next(){
+  currentQ++;
+  if(currentQ < quiz[level].length){
+    renderQ();
+  } else {
+    finish();
   }
 }
 
-function nextLevel(msg){
-  document.getElementById("quizResult").innerText=msg;
-  confetti();
-  loadQuiz();
-}
+function finish(){
+  let percent=(score/quiz[level].length)*100;
+  let msg=`Score ${percent}%`;
 
-function updateProgress(){
-  document.getElementById("progress").style.width = (level*33)+"%";
-}
+  if(level===1 && percent>=70){level=2; msg+="<br>Level 2 🚀";}
+  else if(level===2 && percent>=70){level=3; msg+="<br>Level 3 🔥";}
+  else if(level===3){msg+="<br>Master 🎉";}
 
-// CONFETTI
-function confetti(){
-  for(let i=0;i<60;i++){
-    let d=document.createElement("div");
-    d.style.position="fixed";
-    d.style.width="6px";
-    d.style.height="6px";
-    d.style.background="#00F5FF";
-    d.style.top=Math.random()*window.innerHeight+"px";
-    d.style.left=Math.random()*window.innerWidth+"px";
-    document.body.appendChild(d);
-    setTimeout(()=>d.remove(),2000);
-  }
+  document.getElementById("app").innerHTML = `
+    <div class="quiz-box glass">
+      <h2>${msg}</h2>
+      <button onclick="startQuiz()">Continue</button>
+    </div>
+  `;
 }
 
 // INIT
-loadQuiz();
+navigate('home');
