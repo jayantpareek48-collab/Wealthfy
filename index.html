@@ -3,80 +3,90 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wealthfy.in</title>
-
-<!-- Tailwind -->
-<script src="https://cdn.tailwindcss.com"></script>
-
-<!-- Chart.js -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<!-- Font -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<title>Wealthfy</title>
 
 <link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://unpkg.com/lottie-web@5.12.2/build/player/lottie.min.js"></script>
 </head>
 
-<body class="bg-[#0A0F1E] text-white font-[Inter]">
+<body>
 
-<!-- NAVBAR -->
-<nav class="flex justify-between items-center p-5 glass">
-    <h1 class="text-xl font-semibold text-[#00F5FF]">Wealthfy</h1>
-    <div class="space-x-6">
-        <a href="#">Learn</a>
-        <a href="#tools">Tools</a>
-        <a href="#quiz">Quiz</a>
-        <a href="#">Contact</a>
-    </div>
-</nav>
+<!-- NAV -->
+<div class="navbar glass">
+  <div class="logo">Wealthfy</div>
+  <div class="nav-links">
+    <a href="#">Learn</a>
+    <a href="#tools">Tools</a>
+    <a href="#quiz">Quiz</a>
+    <a href="#">Contact</a>
+  </div>
+</div>
 
 <!-- HERO -->
-<section class="text-center py-12">
-    <h1 class="text-4xl font-bold mb-4">Master Your Financial Future</h1>
-    <p class="text-gray-400">Smart tools + gamified learning</p>
+<section class="hero">
+  <div class="hero-text">
+    <h1>Future of Finance Learning</h1>
+    <p>Interactive tools + gamified investing education</p>
+    <button onclick="scrollToTools()">Explore</button>
+  </div>
+  <div id="lottie-animation"></div>
 </section>
 
-<!-- TOOLS GRID -->
-<section id="tools" class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- TOOLS -->
+<section id="tools" class="cards">
 
-    <!-- SIP CALCULATOR -->
-    <div class="glass p-5">
-        <h2 class="text-xl mb-3 text-[#00F5FF]">SIP Calculator</h2>
+  <div class="card" onclick="openTool('sip')">
+    <h3>SIP Calculator</h3>
+  </div>
 
-        <input id="sipAmount" type="number" placeholder="Monthly Investment" class="input">
-        <input id="sipRate" type="number" placeholder="Return Rate (%)" class="input">
-        <input id="sipTime" type="number" placeholder="Years" class="input">
+  <div class="card" onclick="openTool('saving')">
+    <h3>Savings Growth</h3>
+  </div>
 
-        <button onclick="calculateSIP()" class="btn">Calculate</button>
+</section>
 
-        <p id="sipResult" class="mt-3 text-sm"></p>
-    </div>
+<!-- TOOL SECTION -->
+<section id="toolSection" style="display:none;">
 
-    <!-- SAVINGS GRAPH -->
-    <div class="glass p-5 col-span-1 md:col-span-2">
-        <h2 class="text-xl mb-3 text-[#00F5FF]">Savings Growth</h2>
+<button class="back" onclick="closeTool()">← Back</button>
 
-        <input id="saveAmount" type="number" placeholder="Monthly Savings" class="input">
-        <input id="saveYears" type="number" placeholder="Years" class="input">
+<div id="sip" class="tool">
+  <h2>SIP Calculator</h2>
+  <input id="sipAmount" type="number" placeholder="Monthly ₹">
+  <input id="sipRate" type="number" placeholder="Return %">
+  <input id="sipYears" type="number" placeholder="Years">
+  <button onclick="calcSIP()">Calculate</button>
+  <p id="sipResult"></p>
+</div>
 
-        <button onclick="generateGraph()" class="btn">Generate Graph</button>
+<div id="saving" class="tool">
+  <h2>Savings Graph</h2>
+  <input id="saveAmount" type="number" placeholder="Monthly Saving ₹">
+  <input id="saveYears" type="number" placeholder="Years">
+  <button onclick="generateGraph()">Generate</button>
+</div>
 
-        <canvas id="chartCanvas" class="mt-4"></canvas>
-    </div>
+<canvas id="chart"></canvas>
 
 </section>
 
 <!-- QUIZ -->
-<section id="quiz" class="p-6">
-    <div class="glass p-5">
-        <h2 class="text-xl mb-3 text-[#00F5FF]">Finance Quiz</h2>
+<section id="quiz" class="quiz glass">
+  <h2>Finance Quiz</h2>
 
-        <div id="quizContainer"></div>
+  <div class="progress-bar">
+    <div id="progress"></div>
+  </div>
 
-        <button onclick="submitQuiz()" class="btn mt-3">Submit</button>
+  <div id="quizContainer"></div>
 
-        <p id="quizResult" class="mt-3"></p>
-    </div>
+  <button onclick="submitQuiz()">Submit</button>
+
+  <p id="quizResult"></p>
 </section>
 
 <script src="script.js"></script>
