@@ -107,6 +107,10 @@ function navigate(page){
     startQuiz();
   }
 
+  if(page==="dashboard"){
+    loadDashboard();
+  }
+
   if(page==="about"){
     app.innerHTML = `
       <div class="tool-box glass">
@@ -122,7 +126,7 @@ function navigate(page){
 }
 
 
-// ===== SIP =====
+// ===== SIP CALCULATOR =====
 function calc(){
   let P=+amount.value;
   let r=+rate.value/100/12;
@@ -200,17 +204,65 @@ function finish(){
     </div>
   `;
 
-  // SAVE USER SCORE
-  if(auth.currentUser){
+  // SAVE USER SCORE (FINAL VERSION)
+  const user = auth.currentUser;
+
+  if(user){
     db.collection("users")
-      .doc(auth.currentUser.uid)
+      .doc(user.uid)
       .collection("scores")
       .add({
+        email: user.email,
         score: percent,
         level: level,
         time: new Date()
       });
+  } else {
+    alert("Login to save your progress");
   }
+}
+
+
+// ===== DASHBOARD =====
+function loadDashboard(){
+  const user = auth.currentUser;
+
+  if(!user){
+    document.getElementById("app").innerHTML = `
+      <div class="tool-box glass">
+        <h2>Please login first</h2>
+      </div>
+    `;
+    return;
+  }
+
+  db.collection("users")
+    .doc(user.uid)
+    .collection("scores")
+    .orderBy("time", "desc")
+    .get()
+    .then(snapshot => {
+
+      let html = `
+        <div class="tool-box glass">
+          <h2>Your Quiz History</h2>
+      `;
+
+      if(snapshot.empty){
+        html += `<p>No data yet. Take a quiz!</p>`;
+      }
+
+      snapshot.forEach(doc => {
+        let d = doc.data();
+        html += `
+          <p>📊 Score: ${d.score}% | Level: ${d.level}</p>
+        `;
+      });
+
+      html += `</div>`;
+
+      document.getElementById("app").innerHTML = html;
+    });
 }
 
 
