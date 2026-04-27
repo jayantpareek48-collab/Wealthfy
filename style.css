@@ -1,38 +1,99 @@
 body {
-    font-family: 'Inter', sans-serif;
+  background: #0A0F1E;
+  color: white;
+  font-family: 'Inter', sans-serif;
 }
 
-/* Glassmorphism */
+/* GLASS */
 .glass {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 20px;
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(14px);
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.1);
 }
 
-/* Inputs */
-.input {
-    width: 100%;
-    padding: 10px;
-    margin: 6px 0;
-    border-radius: 10px;
-    background: rgba(255,255,255,0.08);
-    border: none;
-    outline: none;
+/* NAV */
+.navbar {
+  display:flex;
+  justify-content:space-between;
+  padding:20px;
 }
 
-/* Button */
-.btn {
-    margin-top: 10px;
-    padding: 10px;
-    width: 100%;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #00F5FF, #007BFF);
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.3s;
+.nav-links a {
+  margin-left:20px;
+  color:#ccc;
 }
 
-.btn:hover {
-    transform: scale(1.05);
+/* HERO */
+.hero {
+  display:flex;
+  justify-content:space-between;
+  padding:60px;
+}
+
+/* CARDS */
+.cards {
+  display:grid;
+  grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+  padding:40px;
+}
+
+.card {
+  padding:30px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+}
+
+/* INPUT */
+input {
+  display:block;
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+  border-radius:10px;
+  background:#111;
+  border:none;
+}
+
+/* BUTTON */
+button {
+  background: linear-gradient(135deg,#00F5FF,#007BFF);
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  color:white;
+  cursor:pointer;
+}
+
+/* QUIZ */
+.quiz {
+  padding:40px;
+  margin:40px;
+}
+
+.option {
+  display:block;
+  margin:10px 0;
+  padding:10px;
+  background:#111;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.progress-bar {
+  height:10px;
+  background:#222;
+  margin-bottom:20px;
+  border-radius:10px;
+}
+
+#progress {
+  height:100%;
+  width:0%;
+  background:#00F5FF;
 }
