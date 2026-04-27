@@ -2,163 +2,83 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Wealthfy</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wealthfy.in</title>
 
-<!-- CSS -->
-<link rel="stylesheet" href="style.css">
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <!-- Font -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
-<!-- Libraries -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://unpkg.com/lottie-web@5.12.2/build/player/lottie.min.js"></script>
-
+<link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="bg-[#0A0F1E] text-white font-[Inter]">
 
 <!-- NAVBAR -->
-<div class="navbar">
-  <div class="logo">₹ Wealthfy</div>
-</div>
+<nav class="flex justify-between items-center p-5 glass">
+    <h1 class="text-xl font-semibold text-[#00F5FF]">Wealthfy</h1>
+    <div class="space-x-6">
+        <a href="#">Learn</a>
+        <a href="#tools">Tools</a>
+        <a href="#quiz">Quiz</a>
+        <a href="#">Contact</a>
+    </div>
+</nav>
 
 <!-- HERO -->
-<section class="hero">
+<section class="text-center py-12">
+    <h1 class="text-4xl font-bold mb-4">Master Your Financial Future</h1>
+    <p class="text-gray-400">Smart tools + gamified learning</p>
+</section>
 
-  <div class="hero-text">
-    <h1>Build Wealth. Smarter.</h1>
-    <p>Simple tools for SIP, goals & savings — built for India 🇮🇳</p>
-    <button onclick="scrollToTools()">Explore Tools</button>
-  </div>
+<!-- TOOLS GRID -->
+<section id="tools" class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-  <!-- FIXED: ID must match JS -->
-  <div id="lottie-animation"></div>
+    <!-- SIP CALCULATOR -->
+    <div class="glass p-5">
+        <h2 class="text-xl mb-3 text-[#00F5FF]">SIP Calculator</h2>
+
+        <input id="sipAmount" type="number" placeholder="Monthly Investment" class="input">
+        <input id="sipRate" type="number" placeholder="Return Rate (%)" class="input">
+        <input id="sipTime" type="number" placeholder="Years" class="input">
+
+        <button onclick="calculateSIP()" class="btn">Calculate</button>
+
+        <p id="sipResult" class="mt-3 text-sm"></p>
+    </div>
+
+    <!-- SAVINGS GRAPH -->
+    <div class="glass p-5 col-span-1 md:col-span-2">
+        <h2 class="text-xl mb-3 text-[#00F5FF]">Savings Growth</h2>
+
+        <input id="saveAmount" type="number" placeholder="Monthly Savings" class="input">
+        <input id="saveYears" type="number" placeholder="Years" class="input">
+
+        <button onclick="generateGraph()" class="btn">Generate Graph</button>
+
+        <canvas id="chartCanvas" class="mt-4"></canvas>
+    </div>
 
 </section>
 
-<!-- TOOLS -->
-<section id="tools" class="cards">
+<!-- QUIZ -->
+<section id="quiz" class="p-6">
+    <div class="glass p-5">
+        <h2 class="text-xl mb-3 text-[#00F5FF]">Finance Quiz</h2>
 
-  <div class="card" onclick="openTool('sip')">
-    <h3>📈 SIP Calculator</h3>
-  </div>
+        <div id="quizContainer"></div>
 
-  <div class="card" onclick="openTool('goal')">
-    <h3>🎯 Goal Planner</h3>
-  </div>
+        <button onclick="submitQuiz()" class="btn mt-3">Submit</button>
 
-  <div class="card" onclick="openTool('saving')">
-    <h3>💰 Saving Planner</h3>
-  </div>
-
+        <p id="quizResult" class="mt-3"></p>
+    </div>
 </section>
 
-<!-- TOOL SECTION -->
-<section id="toolSection" class="tool-section" style="display:none;">
-
-  <button class="back" onclick="closeTool()">← Back</button>
-
-  <!-- SIP -->
-  <div id="sip" class="tool" style="display:none;">
-    <h2>SIP Calculator</h2>
-
-    <input id="sipAmount" type="number" placeholder="Monthly ₹">
-    <input id="sipRate" type="number" placeholder="Return %">
-    <input id="sipYears" type="number" placeholder="Years">
-
-    <button onclick="calcSIP()">Check Value</button>
-    <p id="sipResult"></p>
-  </div>
-
-  <!-- GOAL -->
-  <div id="goal" class="tool" style="display:none;">
-    <h2>Goal Planner</h2>
-
-    <input id="goalAmount" type="number" placeholder="Target ₹">
-    <input id="goalYears" type="number" placeholder="Years">
-
-    <button onclick="calcGoal()">Check Plan</button>
-    <p id="goalResult"></p>
-  </div>
-
-  <!-- SAVING -->
-  <div id="saving" class="tool" style="display:none;">
-    <h2>Saving Planner</h2>
-
-    <input id="income" type="number" placeholder="Monthly Income ₹">
-    <input id="expense" type="number" placeholder="Monthly Expenses ₹">
-
-    <button onclick="calcSaving()">Check Saving</button>
-    <p id="savingResult"></p>
-  </div>
-
-  <!-- CHART -->
-  <div class="chart-container">
-    <canvas id="chart"></canvas>
-  </div>
-
-</section>
-
-<!-- AI BADGE -->
-<div class="ai-badge">
-  🤖 AI Wealth Advisor Coming Soon
-</div>
-
-<!-- SCRIPT -->
 <script src="script.js"></script>
-
-<!-- INLINE FIXES (IMPORTANT) -->
-<script>
-function scrollToTools() {
-  document.getElementById("tools").scrollIntoView({
-    behavior: "smooth"
-  });
-}
-
-/* Tool Navigation */
-function openTool(toolId) {
-  document.getElementById("toolSection").style.display = "block";
-
-  document.querySelectorAll(".tool").forEach(t => {
-    t.style.display = "none";
-  });
-
-  document.getElementById(toolId).style.display = "block";
-}
-
-function closeTool() {
-  document.getElementById("toolSection").style.display = "none";
-}
-
-/* Lottie Animation FIX */
-lottie.loadAnimation({
-  container: document.getElementById('lottie-animation'),
-  renderer: 'svg',
-  loop: true,
-  autoplay: true,
-  path: 'https://assets2.lottiefiles.com/packages/lf20_qp1q7mct.json'
-});
-
-/* Chart FIX */
-const ctx = document.getElementById('chart');
-
-new Chart(ctx, {
-  type: 'line',
-  data: {
-    labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
-    datasets: [{
-      label: 'Growth (₹)',
-      data: [10000, 25000, 50000, 80000, 120000],
-      borderWidth: 2,
-      tension: 0.4
-    }]
-  },
-  options: {
-    responsive: true
-  }
-});
-</script>
-
 </body>
 </html>
