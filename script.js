@@ -1,3 +1,26 @@
+// ===== FIREBASE SETUP =====
+
+// Your Firebase config
+const firebaseConfig = {
+  apiKey: "AIzaSyAGuTnP1UVnOFF8yRD3_4TUF8tqjWaaVcI",
+  authDomain: "wealthfy-59f90.firebaseapp.com",
+  projectId: "wealthfy-59f90",
+  storageBucket: "wealthfy-59f90.firebasestorage.app",
+  messagingSenderId: "940910768179",
+  appId: "1:940910768179:web:821645289a507078c3f346",
+  measurementId: "G-BG0J6007BS"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+// Services
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+console.log("Firebase Connected ✅");
+
+
 // ===== ROUTING =====
 function navigate(page){
   const app = document.getElementById("app");
@@ -120,6 +143,13 @@ function finish(){
       <button onclick="startQuiz()">Continue</button>
     </div>
   `;
+
+  // 🔥 SAVE SCORE TO FIREBASE
+  db.collection("quizScores").add({
+    score: percent,
+    level: level,
+    time: new Date()
+  });
 }
 
 // INIT
