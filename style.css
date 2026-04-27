@@ -1,220 +1,38 @@
-/* =========================
-   RESET + GLOBAL
-========================= */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
-
-:root {
-  --primary: #6366f1;
-  --secondary: #818cf8;
-  --accent: #fbcfe8;
-  --text: #1e293b;
-}
-
-/* =========================
-   BODY + BACKGROUND GLOW
-========================= */
 body {
-  background: linear-gradient(135deg, #eef2ff, #fdf2f8);
-  color: var(--text);
-  min-height: 100vh;
+    font-family: 'Inter', sans-serif;
 }
 
-/* Glow Effects */
-body::before,
-body::after {
-  content: "";
-  position: fixed;
-  width: 400px;
-  height: 400px;
-  z-index: -1;
-  filter: blur(80px);
+/* Glassmorphism */
+.glass {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.1);
 }
 
-body::before {
-  background: #a5b4fc;
-  top: -100px;
-  left: -100px;
+/* Inputs */
+.input {
+    width: 100%;
+    padding: 10px;
+    margin: 6px 0;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.08);
+    border: none;
+    outline: none;
 }
 
-body::after {
-  background: #fbcfe8;
-  bottom: -100px;
-  right: -100px;
+/* Button */
+.btn {
+    margin-top: 10px;
+    padding: 10px;
+    width: 100%;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #00F5FF, #007BFF);
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
-/* =========================
-   NAVBAR
-========================= */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 40px;
-  background: rgba(255,255,255,0.6);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-}
-
-/* Logo */
-.logo {
-  font-size: 26px;
-  font-weight: 700;
-  background: linear-gradient(135deg, var(--primary), #ec4899);
-  -webkit-background-clip: text;
-  color: transparent;
-}
-
-/* =========================
-   HERO SECTION
-========================= */
-.hero {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 80px 60px;
-  flex-wrap: wrap;
-}
-
-.hero-text {
-  max-width: 500px;
-}
-
-.hero h1 {
-  font-size: 48px;
-  font-weight: 700;
-}
-
-.hero p {
-  margin-top: 10px;
-  font-size: 18px;
-  color: #64748b;
-}
-
-/* Lottie Animation */
-#lottie-animation {
-  width: 420px;
-  max-width: 100%;
-}
-
-/* =========================
-   BUTTONS
-========================= */
-button {
-  margin-top: 20px;
-  padding: 12px 22px;
-  border: none;
-  border-radius: 12px;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  color: white;
-  font-size: 14px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-button:hover {
-  opacity: 0.9;
-}
-
-button:active {
-  transform: scale(0.96);
-}
-
-/* =========================
-   CARDS SECTION
-========================= */
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
-  padding: 40px;
-}
-
-/* Card Style */
-.card {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(14px);
-  border-radius: 20px;
-  padding: 25px;
-  text-align: center;
-  cursor: pointer;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-  transition: 0.3s;
-  border: 1px solid rgba(255,255,255,0.4);
-}
-
-/* Card Hover */
-.card:hover {
-  transform: translateY(-8px) scale(1.03);
-  box-shadow: 0 15px 40px rgba(99,102,241,0.2);
-  background: linear-gradient(135deg, #e0e7ff, #fce7f3);
-}
-
-.card h3 {
-  margin-top: 10px;
-  color: var(--primary);
-}
-
-/* =========================
-   CALCULATOR SECTION
-========================= */
-#calculator-section {
-  margin: 40px;
-  padding: 25px;
-  border-radius: 20px;
-  background: white;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-}
-
-input {
-  display: block;
-  width: 100%;
-  margin: 10px 0;
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid #e2e8f0;
-}
-
-/* =========================
-   CHART
-========================= */
-.chart-container {
-  margin: 40px;
-  padding: 20px;
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-}
-
-/* =========================
-   AI BADGE
-========================= */
-.ai-badge {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: var(--primary);
-  color: white;
-  padding: 10px 15px;
-  border-radius: 20px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-  font-size: 14px;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-@media (max-width: 768px) {
-  .hero {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  #lottie-animation {
-    margin-top: 20px;
-  }
+.btn:hover {
+    transform: scale(1.05);
 }
