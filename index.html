@@ -10,10 +10,11 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
+<!-- Charts + Animations -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://unpkg.com/lottie-web@5.12.2/build/player/lottie.min.js"></script>
 
-<!-- ✅ Firebase COMPAT SDK (IMPORTANT FIX) -->
+<!-- ✅ Firebase COMPAT SDK (required for your JS) -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
@@ -29,11 +30,12 @@
     <span onclick="navigate('home')">Home</span>
     <span onclick="navigate('tools')">Tools</span>
     <span onclick="navigate('quiz')">Quiz</span>
+    <span onclick="navigate('dashboard')">Dashboard</span>
     <span onclick="navigate('about')">Contact</span>
   </div>
 </nav>
 
-<!-- APP -->
+<!-- MAIN APP -->
 <div id="app"></div>
 
 <!-- FOOTER -->
@@ -45,6 +47,8 @@
   <p class="small">Educational Purpose Only</p>
 </footer>
 
+<!-- MAIN SCRIPT -->
 <script src="script.js"></script>
+
 </body>
 </html>
