@@ -1,113 +1,110 @@
-body {
+body{
   margin:0;
   font-family:'Inter',sans-serif;
   background:#0A0F1E;
   color:white;
+  scroll-behavior:smooth;
 }
 
 /* GLASS */
-.glass {
+.glass{
   background:rgba(255,255,255,0.05);
-  backdrop-filter:blur(12px);
+  backdrop-filter:blur(15px);
   border:1px solid rgba(255,255,255,0.1);
+  border-radius:15px;
 }
 
-/* NAV */
-.navbar {
+/* NAVBAR */
+.navbar{
+  position:sticky;
+  top:0;
   display:flex;
   justify-content:space-between;
-  padding:20px 40px;
+  padding:15px 40px;
+  z-index:1000;
 }
 
-.logo {
-  font-size:28px;
+.nav-links a{
+  margin:0 15px;
+  text-decoration:none;
+  color:#aaa;
+}
+
+.nav-links a:hover{
+  color:#00F5FF;
+}
+
+.logo{
   font-weight:800;
   color:#00F5FF;
 }
 
-.nav-links span {
-  margin-left:20px;
-  cursor:pointer;
-  color:#aaa;
-}
-.nav-links span:hover {
-  color:#FFD700;
-}
-
 /* HERO */
-.hero {
+.hero{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
   text-align:center;
-  padding:120px 20px;
 }
 
-.hero h1 {
-  font-size:64px;
-  font-weight:800;
+.hero h1{
+  font-size:70px;
 }
 
-.hero p {
-  color:#aaa;
+/* SECTION */
+.section{
+  padding:100px 20px;
+  text-align:center;
 }
 
-/* TOOL */
-.tool-box {
-  max-width:500px;
-  margin:50px auto;
+/* CARDS */
+.card-grid{
+  display:flex;
+  justify-content:center;
+  gap:20px;
 }
 
-input {
-  width:100%;
-  padding:10px;
-  margin:10px 0;
-  border-radius:10px;
-  background:#111;
-  border:none;
-}
-
-button {
-  background:linear-gradient(135deg,#00F5FF,#FFD700);
-  border:none;
-  padding:10px;
-  border-radius:10px;
-  cursor:pointer;
-}
-
-/* QUIZ */
-.quiz-box {
-  max-width:600px;
-  margin:50px auto;
-}
-
-.option {
-  padding:12px;
-  margin:10px 0;
-  background:#111;
-  border-radius:10px;
-  cursor:pointer;
-}
-.option:hover {
+.card{
+  padding:30px;
   border:1px solid #00F5FF;
+  cursor:pointer;
 }
 
-.explanation {
-  margin-top:20px;
-  padding:15px;
-  border-left:4px solid #FFD700;
-  background:#111;
+/* LEVELS */
+.levels{
+  display:flex;
+  justify-content:center;
+  gap:20px;
 }
 
-/* FOOTER */
-footer {
-  text-align:center;
+.level{
   padding:20px;
-  background:#05080F;
+  border:1px solid #FFD700;
+  cursor:pointer;
 }
 
-.badge {
-  color:#FFD700;
+.locked{
+  opacity:0.3;
 }
 
-.small {
-  font-size:12px;
-  color:#777;
+/* MODAL */
+.modal{
+  display:none;
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.7);
+}
+
+.modal-content{
+  margin:10% auto;
+  padding:20px;
+  width:300px;
+}
+
+.close{
+  float:right;
+  cursor:pointer;
 }
