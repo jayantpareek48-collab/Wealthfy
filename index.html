@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Wealthfy Elite</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wealthfy Elite - Finance Quiz</title>
 
-  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="styles.css" />
   <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Firebase -->
@@ -15,7 +15,10 @@
 
 <body>
 
-<header class="container">
+<div class="bg-orb orb-1"></div>
+<div class="bg-orb orb-2"></div>
+
+<header class="container shell">
   <h1 class="title">Wealthfy Elite</h1>
   <p class="subtitle">Learn. Invest. Grow.</p>
 </header>
@@ -24,55 +27,82 @@
 
   <!-- AUTH -->
   <section class="glass-card panel">
-    <h2>Account</h2>
-    <input id="email" class="field" placeholder="Email"/>
-    <input id="password" class="field" type="password" placeholder="Password"/>
+    <h2 class="panel-title">Account</h2>
+    <div class="stack">
+      <input id="email" class="field" placeholder="Email"/>
+      <input id="password" class="field" type="password" placeholder="Password"/>
 
-    <div class="btn-row">
-      <button id="signupBtn" class="btn btn-primary">Sign Up</button>
-      <button id="loginBtn" class="btn btn-blue">Login</button>
-      <button id="logoutBtn" class="btn btn-outline">Logout</button>
+      <div class="btn-row">
+        <button id="signupBtn" class="btn btn-primary">Sign Up</button>
+        <button id="loginBtn" class="btn btn-blue">Login</button>
+        <button id="logoutBtn" class="btn btn-outline">Logout</button>
+      </div>
+
+      <p id="userStatus" class="muted">Not logged in</p>
     </div>
-
-    <p id="userStatus" class="muted">Not logged in</p>
   </section>
 
   <!-- SIP -->
   <section class="glass-card panel">
-    <h2>SIP Calculator</h2>
-    <input id="amount" class="field" placeholder="Monthly amount"/>
-    <input id="rate" class="field" placeholder="Return (%)"/>
-    <input id="years" class="field" placeholder="Years"/>
+    <h2 class="panel-title">SIP Calculator</h2>
+    <div class="stack">
+      <input id="amount" class="field" placeholder="Monthly amount"/>
+      <input id="rate" class="field" placeholder="Return (%)"/>
+      <input id="years" class="field" placeholder="Years"/>
 
-    <button id="calcBtn" class="btn btn-primary">Calculate</button>
-    <p id="result" class="muted"></p>
+      <button id="calcBtn" class="btn btn-primary">Calculate</button>
+      <p id="result" class="muted"></p>
+    </div>
   </section>
 
   <!-- QUIZ -->
   <section class="glass-card panel panel-wide">
-    <h2>Quiz</h2>
+    <div class="panel-head">
+      <h2 class="panel-title">Quiz Arena</h2>
+      <p id="quizMeta" class="muted">Choose a level</p>
+    </div>
 
-    <div id="levelsGrid"></div>
+    <div id="levelsGrid" class="levels-grid"></div>
 
-    <div id="quizSection" class="hidden">
-      <div class="progress">
-        <div id="progressFill"></div>
+    <div id="quizSection" class="quiz-shell hidden">
+      <div class="progress-track">
+        <div id="progressFill" class="progress-fill"></div>
       </div>
 
-      <p id="progressText"></p>
+      <p id="progressText" class="muted"></p>
       <h3 id="questionText"></h3>
 
-      <div id="optionsWrap"></div>
+      <div id="optionsWrap" class="options"></div>
 
-      <button id="nextBtn" class="btn btn-blue">Next</button>
-      <button id="quitBtn" class="btn btn-outline">Quit</button>
+      <div class="btn-row">
+        <button id="nextBtn" class="btn btn-blue" disabled>Next</button>
+        <button id="quitBtn" class="btn btn-outline">Quit</button>
+      </div>
     </div>
   </section>
 
 </main>
 
+<!-- POPUP -->
+<div id="popup" class="popup glass-card">
+  <p>Start your financial journey 🚀</p>
+  <button id="closePopupBtn" class="btn btn-outline btn-sm">Close</button>
+</div>
+
 <!-- TOAST -->
 <div id="toast" class="toast"></div>
+
+<!-- MODAL -->
+<div id="discountModal" class="modal-backdrop hidden">
+  <div class="modal-card glass-card">
+    <h3>Level 2 Unlocked 🎉</h3>
+    <p>Claim your reward</p>
+    <div class="btn-row">
+      <button id="claimOfferBtn" class="btn btn-primary">Claim</button>
+      <button id="closeModalBtn" class="btn btn-outline">Close</button>
+    </div>
+  </div>
+</div>
 
 <script src="script.js"></script>
 </body>
