@@ -10,11 +10,9 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
-<!-- Charts + Animations -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://unpkg.com/lottie-web@5.12.2/build/player/lottie.min.js"></script>
 
-<!-- ✅ Firebase COMPAT SDK (required for your JS) -->
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
@@ -23,31 +21,93 @@
 
 <body>
 
-<!-- NAV -->
+<!-- NAVBAR -->
 <nav class="navbar glass">
   <div class="logo">₹Wealthfy</div>
+
   <div class="nav-links">
-    <span onclick="navigate('home')">Home</span>
-    <span onclick="navigate('tools')">Tools</span>
-    <span onclick="navigate('quiz')">Quiz</span>
-    <span onclick="navigate('dashboard')">Dashboard</span>
-    <span onclick="navigate('about')">Contact</span>
+    <a href="#hero">Home</a>
+    <a href="#mission">About</a>
+    <a href="#tools">Tools</a>
+    <a href="#quiz">Quiz</a>
+  </div>
+
+  <div class="auth-buttons">
+    <button onclick="openModal()">Login</button>
   </div>
 </nav>
 
-<!-- MAIN APP -->
-<div id="app"></div>
+<!-- LOGIN MODAL -->
+<div id="authModal" class="modal">
+  <div class="modal-content glass">
+    <span class="close" onclick="closeModal()">×</span>
+
+    <h2>Login / Signup</h2>
+
+    <!-- IMPORTANT: IDs NOT CHANGED -->
+    <input id="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Password">
+
+    <button onclick="signup()">Sign Up</button>
+    <button onclick="login()">Login</button>
+    <button onclick="logout()">Logout</button>
+
+    <p id="userStatus"></p>
+  </div>
+</div>
+
+<!-- HERO -->
+<section id="hero" class="hero">
+  <h1>Future of Finance Learning</h1>
+  <p>Scroll to Explore ↓</p>
+</section>
+
+<!-- MISSION -->
+<section id="mission" class="section">
+  <h2>Our Mission</h2>
+  <p>
+    Wealthfy aims to empower India with financial literacy using modern tools,
+    gamification, and real-world investing education.
+  </p>
+</section>
+
+<!-- TOOLS -->
+<section id="tools" class="section">
+  <h2>Toolbox</h2>
+
+  <div class="card-grid">
+    <div class="card" onclick="showSIP()">
+      <h3>SIP Calculator</h3>
+      <p>Plan your future wealth</p>
+    </div>
+
+    <div class="card">
+      <h3>Savings Planner</h3>
+      <p>Coming Soon</p>
+    </div>
+  </div>
+
+  <div id="toolArea"></div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz" class="section">
+  <h2>Learning Path</h2>
+
+  <div class="levels">
+    <div class="level" onclick="startQuiz(1)">Level 1<br>Beginner</div>
+    <div class="level locked">Level 2<br>Investor</div>
+    <div class="level locked">Level 3<br>Wealth Master</div>
+  </div>
+
+  <div id="quizArea"></div>
+</section>
 
 <!-- FOOTER -->
 <footer>
-  <p>Email: jayantpareek48@gmail.com</p>
-  <p>Phone: +91 96606 95670</p>
-  <p>Sikar, Rajasthan 🇮🇳</p>
-  <p class="badge">Made in India</p>
-  <p class="small">Educational Purpose Only</p>
+  <p>Wealthfy © 2026</p>
 </footer>
 
-<!-- MAIN SCRIPT -->
 <script src="script.js"></script>
 
 </body>
