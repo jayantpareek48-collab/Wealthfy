@@ -1,93 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Wealthfy Elite - Finance Quiz</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wealthfy Elite</title>
 
-    <link rel="stylesheet" href="styles.css" />
-    <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css"/>
+  <script src="https://cdn.tailwindcss.com"></script>
 
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-  </head>
-  <body>
-    <div class="bg-orb orb-1" aria-hidden="true"></div>
-    <div class="bg-orb orb-2" aria-hidden="true"></div>
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+</head>
 
-    <header class="container shell">
-      <h1 class="title">Wealthfy Elite</h1>
-      <p class="subtitle">Learn. Invest. Grow. Level up your financial IQ.</p>
-    </header>
+<body>
 
-    <main class="container layout">
-      <section class="glass-card panel">
-        <h2 class="panel-title">Account</h2>
-        <div class="stack">
-          <input id="email" class="field" type="email" placeholder="Email" />
-          <input id="password" class="field" type="password" placeholder="Password" />
-          <div class="btn-row">
-            <button id="signupBtn" class="btn btn-primary">Sign Up</button>
-            <button id="loginBtn" class="btn btn-blue">Login</button>
-            <button id="logoutBtn" class="btn btn-outline">Logout</button>
-          </div>
-          <p id="userStatus" class="status muted">Not logged in</p>
-        </div>
-      </section>
+<header class="container">
+  <h1 class="title">Wealthfy Elite</h1>
+  <p class="subtitle">Learn. Invest. Grow.</p>
+</header>
 
-      <section class="glass-card panel">
-        <h2 class="panel-title">SIP Calculator</h2>
-        <div class="stack">
-          <input id="amount" class="field" type="number" min="1" placeholder="Monthly amount (INR)" />
-          <input id="rate" class="field" type="number" min="0.1" step="0.1" placeholder="Expected annual return (%)" />
-          <input id="years" class="field" type="number" min="1" placeholder="Duration (years)" />
-          <button id="calcBtn" class="btn btn-primary">Calculate Future Value</button>
-          <p id="result" class="status muted">Fill values to calculate.</p>
-        </div>
-      </section>
+<main class="container layout">
 
-      <section class="glass-card panel panel-wide">
-        <div class="panel-head">
-          <h2 class="panel-title">Financial Quiz Arena</h2>
-          <p class="muted" id="quizMeta">Choose a level to begin.</p>
-        </div>
+  <!-- AUTH -->
+  <section class="glass-card panel">
+    <h2>Account</h2>
+    <input id="email" class="field" placeholder="Email"/>
+    <input id="password" class="field" type="password" placeholder="Password"/>
 
-        <div id="levelsGrid" class="levels-grid"></div>
-
-        <div id="quizSection" class="quiz-shell hidden" aria-live="polite">
-          <div class="progress-track">
-            <div id="progressFill" class="progress-fill"></div>
-          </div>
-          <p id="progressText" class="muted"></p>
-          <h3 id="questionText" class="question"></h3>
-          <div id="optionsWrap" class="options"></div>
-          <div class="btn-row">
-            <button id="nextBtn" class="btn btn-blue" disabled>Next</button>
-            <button id="quitBtn" class="btn btn-outline">Quit Level</button>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <div id="popup" class="popup glass-card" role="status" aria-live="polite">
-      <p>Ready to grow your wealth journey?</p>
-      <button id="closePopupBtn" class="btn btn-outline btn-sm">Close</button>
+    <div class="btn-row">
+      <button id="signupBtn" class="btn btn-primary">Sign Up</button>
+      <button id="loginBtn" class="btn btn-blue">Login</button>
+      <button id="logoutBtn" class="btn btn-outline">Logout</button>
     </div>
 
-    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <p id="userStatus" class="muted">Not logged in</p>
+  </section>
 
-    <div id="discountModal" class="modal-backdrop hidden" aria-hidden="true">
-      <div class="modal-card glass-card">
-        <h3>Level 2 School Unlocked</h3>
-        <p>You unlocked advanced learning. Claim your 80% discount now.</p>
-        <div class="btn-row">
-          <button id="claimOfferBtn" class="btn btn-primary">Claim Offer</button>
-          <button id="closeModalBtn" class="btn btn-outline">Maybe Later</button>
-        </div>
+  <!-- SIP -->
+  <section class="glass-card panel">
+    <h2>SIP Calculator</h2>
+    <input id="amount" class="field" placeholder="Monthly amount"/>
+    <input id="rate" class="field" placeholder="Return (%)"/>
+    <input id="years" class="field" placeholder="Years"/>
+
+    <button id="calcBtn" class="btn btn-primary">Calculate</button>
+    <p id="result" class="muted"></p>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="glass-card panel panel-wide">
+    <h2>Quiz</h2>
+
+    <div id="levelsGrid"></div>
+
+    <div id="quizSection" class="hidden">
+      <div class="progress">
+        <div id="progressFill"></div>
       </div>
-    </div>
 
-    <script src="script.js"></script>
-  </body>
+      <p id="progressText"></p>
+      <h3 id="questionText"></h3>
+
+      <div id="optionsWrap"></div>
+
+      <button id="nextBtn" class="btn btn-blue">Next</button>
+      <button id="quitBtn" class="btn btn-outline">Quit</button>
+    </div>
+  </section>
+
+</main>
+
+<!-- TOAST -->
+<div id="toast" class="toast"></div>
+
+<script src="script.js"></script>
+</body>
 </html>
