@@ -10,23 +10,66 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.1/dist/full.min.css" rel="stylesheet"/>
 
-<!-- CSS -->
-<link rel="stylesheet" href="style.css">
-
-<!-- Firebase -->
+<!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
+<style>
+/* Electric Pulse Background */
+body {
+  margin:0;
+  background:
+    radial-gradient(circle at 20% 20%, #635BFF, transparent),
+    radial-gradient(circle at 80% 30%, #00E5E5, transparent),
+    #0A0F1D;
+  animation: moveBg 10s infinite alternate;
+  color:white;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Animation */
+@keyframes moveBg {
+  0% {background-position: left;}
+  100% {background-position: right;}
+}
+
+/* Blur Entry */
+body {
+  animation: blurIn 1.2s ease forwards;
+}
+@keyframes blurIn {
+  from {filter: blur(20px); opacity:0;}
+  to {filter: blur(0); opacity:1;}
+}
+
+/* Glass */
+.glass {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(15px);
+  border:1px solid rgba(255,255,255,0.1);
+}
+
+/* Popup */
+#popup {
+  position: fixed;
+  bottom: 20px;
+  right: -300px;
+  transition: 0.5s;
+}
+#popup.show {
+  right: 20px;
+}
+</style>
+
 </head>
 
-<body class="text-white">
+<body>
 
 <!-- HERO -->
-<section class="min-h-screen flex flex-col items-center justify-center text-center px-4">
+<div class="min-h-screen flex flex-col items-center justify-center text-center px-4">
 
-  <!-- Glass Card -->
-  <div class="glass-card p-10 rounded-3xl max-w-md w-full shadow-xl">
+  <div class="glass p-10 rounded-3xl max-w-md w-full">
 
     <h1 class="text-4xl font-bold mb-3">Future of Finance</h1>
     <p class="text-gray-300 mb-6">Learn • Invest • Grow</p>
@@ -42,19 +85,13 @@
     <p id="userStatus" class="text-sm mt-2"></p>
   </div>
 
-  <!-- FEATURE CARDS -->
-  <div class="grid md:grid-cols-3 gap-6 mt-12 w-full max-w-4xl">
-    <div class="feature-card">Trust</div>
-    <div class="feature-card">Security</div>
-    <div class="feature-card">Growth</div>
-  </div>
+</div>
 
-</section>
+<!-- SIP CALCULATOR -->
+<div class="p-8 max-w-md mx-auto">
 
-<!-- CALCULATOR -->
-<section class="p-8 grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+  <div class="glass p-6 rounded-xl border border-cyan-400">
 
-  <div class="glass-card p-6 neon-card">
     <h2 class="text-xl mb-3">SIP Calculator</h2>
 
     <input id="amount" placeholder="Monthly ₹" class="input w-full mb-2 bg-black/30">
@@ -64,12 +101,13 @@
     <button onclick="calc()" class="btn bg-cyan-400 text-black w-full">Calculate</button>
 
     <p id="result" class="mt-3"></p>
+
   </div>
 
-</section>
+</div>
 
 <!-- POPUP -->
-<div id="popup" class="popup">
+<div id="popup" class="glass p-4 rounded-xl border border-cyan-400">
   <p>Ready to grow your wealth?</p>
   <button onclick="closePopup()" class="btn btn-sm mt-2">Close</button>
 </div>
