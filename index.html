@@ -4,13 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>₹Wealthfy</title>
+<title>₹Wealthfy Elite</title>
 
+<!-- Tailwind + DaisyUI -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.1/dist/full.min.css" rel="stylesheet"/>
+
+<!-- CSS -->
 <link rel="stylesheet" href="style.css">
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -19,94 +20,59 @@
 
 </head>
 
-<body>
-
-<!-- NAVBAR -->
-<nav class="navbar glass">
-  <div class="logo">₹Wealthfy</div>
-
-  <div class="nav-links">
-    <a href="#hero">Home</a>
-    <a href="#mission">About</a>
-    <a href="#tools">Tools</a>
-    <a href="#quiz">Quiz</a>
-  </div>
-
-  <div class="auth-buttons">
-    <button onclick="openModal()">Login</button>
-  </div>
-</nav>
-
-<!-- LOGIN MODAL -->
-<div id="authModal" class="modal">
-  <div class="modal-content glass">
-    <span class="close" onclick="closeModal()">×</span>
-
-    <h2>Login / Signup</h2>
-
-    <!-- IMPORTANT: IDs NOT CHANGED -->
-    <input id="email" placeholder="Email">
-    <input id="password" type="password" placeholder="Password">
-
-    <button onclick="signup()">Sign Up</button>
-    <button onclick="login()">Login</button>
-    <button onclick="logout()">Logout</button>
-
-    <p id="userStatus"></p>
-  </div>
-</div>
+<body class="text-white">
 
 <!-- HERO -->
-<section id="hero" class="hero">
-  <h1>Future of Finance Learning</h1>
-  <p>Scroll to Explore ↓</p>
-</section>
+<section class="min-h-screen flex flex-col items-center justify-center text-center px-4">
 
-<!-- MISSION -->
-<section id="mission" class="section">
-  <h2>Our Mission</h2>
-  <p>
-    Wealthfy aims to empower India with financial literacy using modern tools,
-    gamification, and real-world investing education.
-  </p>
-</section>
+  <!-- Glass Card -->
+  <div class="glass-card p-10 rounded-3xl max-w-md w-full shadow-xl">
 
-<!-- TOOLS -->
-<section id="tools" class="section">
-  <h2>Toolbox</h2>
+    <h1 class="text-4xl font-bold mb-3">Future of Finance</h1>
+    <p class="text-gray-300 mb-6">Learn • Invest • Grow</p>
 
-  <div class="card-grid">
-    <div class="card" onclick="showSIP()">
-      <h3>SIP Calculator</h3>
-      <p>Plan your future wealth</p>
-    </div>
+    <!-- AUTH -->
+    <input id="email" placeholder="Email" class="input input-bordered w-full mb-2 bg-black/30">
+    <input id="password" type="password" placeholder="Password" class="input input-bordered w-full mb-2 bg-black/30">
 
-    <div class="card">
-      <h3>Savings Planner</h3>
-      <p>Coming Soon</p>
-    </div>
+    <button onclick="signup()" class="btn w-full mb-2 bg-cyan-400 text-black">Sign Up</button>
+    <button onclick="login()" class="btn w-full mb-2 bg-purple-500">Login</button>
+    <button onclick="logout()" class="btn btn-outline w-full mb-2">Logout</button>
+
+    <p id="userStatus" class="text-sm mt-2"></p>
   </div>
 
-  <div id="toolArea"></div>
-</section>
-
-<!-- QUIZ -->
-<section id="quiz" class="section">
-  <h2>Learning Path</h2>
-
-  <div class="levels">
-    <div class="level" onclick="startQuiz(1)">Level 1<br>Beginner</div>
-    <div class="level locked">Level 2<br>Investor</div>
-    <div class="level locked">Level 3<br>Wealth Master</div>
+  <!-- FEATURE CARDS -->
+  <div class="grid md:grid-cols-3 gap-6 mt-12 w-full max-w-4xl">
+    <div class="feature-card">Trust</div>
+    <div class="feature-card">Security</div>
+    <div class="feature-card">Growth</div>
   </div>
 
-  <div id="quizArea"></div>
 </section>
 
-<!-- FOOTER -->
-<footer>
-  <p>Wealthfy © 2026</p>
-</footer>
+<!-- CALCULATOR -->
+<section class="p-8 grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+
+  <div class="glass-card p-6 neon-card">
+    <h2 class="text-xl mb-3">SIP Calculator</h2>
+
+    <input id="amount" placeholder="Monthly ₹" class="input w-full mb-2 bg-black/30">
+    <input id="rate" placeholder="Return %" class="input w-full mb-2 bg-black/30">
+    <input id="years" placeholder="Years" class="input w-full mb-2 bg-black/30">
+
+    <button onclick="calc()" class="btn bg-cyan-400 text-black w-full">Calculate</button>
+
+    <p id="result" class="mt-3"></p>
+  </div>
+
+</section>
+
+<!-- POPUP -->
+<div id="popup" class="popup">
+  <p>Ready to grow your wealth?</p>
+  <button onclick="closePopup()" class="btn btn-sm mt-2">Close</button>
+</div>
 
 <script src="script.js"></script>
 
