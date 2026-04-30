@@ -5,12 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wealthfy Elite - Finance Quiz</title>
 
-  <link rel="stylesheet" href="styles.css" />
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-  <!-- Firebase (compat for your JS) -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <!-- CSS -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body>
@@ -26,12 +28,12 @@
 
 <main class="container layout">
 
-  <!-- AUTH -->
+  <!-- AUTH (DEMO MODE) -->
   <section class="glass-card panel">
-    <h2 class="panel-title">Account</h2>
+    <h2 class="panel-title">Account (Demo)</h2>
     <div class="stack">
-      <input id="email" class="field" type="email" placeholder="Email" required autocomplete="email"/>
-      <input id="password" class="field" type="password" placeholder="Password" required autocomplete="current-password"/>
+      <input id="email" class="field" type="email" placeholder="Email" autocomplete="email"/>
+      <input id="password" class="field" type="password" placeholder="Password" autocomplete="current-password"/>
 
       <div class="btn-row">
         <button type="button" id="signupBtn" class="btn btn-primary">Sign Up</button>
@@ -39,7 +41,7 @@
         <button type="button" id="logoutBtn" class="btn btn-outline">Logout</button>
       </div>
 
-      <p id="userStatus" class="muted">Not logged in</p>
+      <p id="userStatus" class="muted">Demo mode (no real login)</p>
     </div>
   </section>
 
@@ -47,9 +49,9 @@
   <section class="glass-card panel">
     <h2 class="panel-title">SIP Calculator</h2>
     <div class="stack">
-      <input id="amount" type="number" class="field" placeholder="Monthly amount" required/>
-      <input id="rate" type="number" class="field" placeholder="Return (%)" required/>
-      <input id="years" type="number" class="field" placeholder="Years" required/>
+      <input id="amount" type="number" class="field" placeholder="Monthly amount"/>
+      <input id="rate" type="number" class="field" placeholder="Return (%)"/>
+      <input id="years" type="number" class="field" placeholder="Years"/>
 
       <button type="button" id="calcBtn" class="btn btn-primary">Calculate</button>
       <p id="result" class="muted"></p>
@@ -105,7 +107,7 @@
   </div>
 </div>
 
-<!-- JS (defer is IMPORTANT) -->
+<!-- JS -->
 <script src="script.js" defer></script>
 
 </body>
