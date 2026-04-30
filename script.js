@@ -1,7 +1,5 @@
 // ===== FIREBASE CONFIG =====
 const firebaseConfig = {
-  apiKey: "// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
   apiKey: "AIzaSyAGuTnP1UVnOFF8yRD3_4TUF8tqjWaaVcI",
   authDomain: "wealthfy-59f90.firebaseapp.com",
   projectId: "wealthfy-59f90",
@@ -9,139 +7,168 @@ const firebaseConfig = {
   messagingSenderId: "940910768179",
   appId: "1:940910768179:web:821645289a507078c3f346",
   measurementId: "G-BG0J6007BS"
- {
-  firebase.initializeApp(firebaseConfig);
-}
+};
 
-const auth = firebase.apps.length ? firebase.auth() : null;
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
 
 // ===== ELEMENTS =====
 const el = {
-  email, password, userStatus,
-  amount, rate, years, result,
-  calcBtn, signupBtn, loginBtn, logoutBtn,
-  popup, closePopupBtn,
-  toast,
-  discountModal, closeModalBtn, claimOfferBtn,
-  levelsGrid, quizMeta, quizSection,
-  progressFill, progressText,
-  questionText, optionsWrap,
-  nextBtn, quitBtn
+  email: document.getElementById("email"),
+  password: document.getElementById("password"),
+  userStatus: document.getElementById("userStatus"),
+
+  amount: document.getElementById("amount"),
+  rate: document.getElementById("rate"),
+  years: document.getElementById("years"),
+  result: document.getElementById("result"),
+
+  calcBtn: document.getElementById("calcBtn"),
+  signupBtn: document.getElementById("signupBtn"),
+  loginBtn: document.getElementById("loginBtn"),
+  logoutBtn: document.getElementById("logoutBtn"),
+
+  popup: document.getElementById("popup"),
+  closePopupBtn: document.getElementById("closePopupBtn"),
+  toast: document.getElementById("toast"),
+
+  discountModal: document.getElementById("discountModal"),
+  closeModalBtn: document.getElementById("closeModalBtn"),
+  claimOfferBtn: document.getElementById("claimOfferBtn"),
+
+  levelsGrid: document.getElementById("levelsGrid"),
+  quizMeta: document.getElementById("quizMeta"),
+  quizSection: document.getElementById("quizSection"),
+
+  progressFill: document.getElementById("progressFill"),
+  progressText: document.getElementById("progressText"),
+  questionText: document.getElementById("questionText"),
+  optionsWrap: document.getElementById("optionsWrap"),
+
+  nextBtn: document.getElementById("nextBtn"),
+  quitBtn: document.getElementById("quitBtn")
 };
 
 // ===== TOAST =====
-function showToast(msg, type="success"){
+function showToast(msg, type = "success") {
   el.toast.textContent = msg;
   el.toast.className = `toast ${type} show`;
-  setTimeout(()=> el.toast.className="toast",2000);
+  setTimeout(() => (el.toast.className = "toast"), 2000);
 }
 
 // ===== AUTH =====
-signupBtn.onclick = () => {
-  if(!auth) return showToast("Add Firebase","error");
-  auth.createUserWithEmailAndPassword(email.value,password.value)
-  .then(()=> showToast("Signup success"))
-  .catch(()=> showToast("Error","error"));
+el.signupBtn.onclick = () => {
+  auth.createUserWithEmailAndPassword(el.email.value, el.password.value)
+    .then(() => showToast("Signup success"))
+    .catch(err => showToast(err.message, "error"));
 };
 
-loginBtn.onclick = () => {
-  if(!auth) return showToast("Add Firebase","error");
-  auth.signInWithEmailAndPassword(email.value,password.value)
-  .then(()=> showToast("Login success"))
-  .catch(()=> showToast("Error","error"));
+el.loginBtn.onclick = () => {
+  auth.signInWithEmailAndPassword(el.email.value, el.password.value)
+    .then(() => showToast("Login success"))
+    .catch(err => showToast(err.message, "error"));
 };
 
-logoutBtn.onclick = () => {
-  if(auth) auth.signOut();
+el.logoutBtn.onclick = () => {
+  auth.signOut();
 };
 
-// ===== SIP =====
-calcBtn.onclick = () => {
-  const P = +amount.value;
-  const r = +rate.value/100/12;
-  const n = +years.value*12;
+// Optional: Track user state
+auth.onAuthStateChanged(user => {
+  el.userStatus.innerText = user ? `Logged in: ${user.email}` : "Logged out";
+});
 
-  if(!P||!r||!n) return showToast("Fill all","error");
+// ===== SIP CALCULATOR =====
+el.calcBtn.onclick = () => {
+  const P = +el.amount.value;
+  const r = +el.rate.value / 100 / 12;
+  const n = +el.years.value * 12;
 
-  const fv = P*((1+r)**n-1)/r*(1+r);
-  result.innerText = "₹"+Math.round(fv);
+  if (!P || !r || !n) return showToast("Fill all fields", "error");
+
+  const fv = P * ((1 + r) ** n - 1) / r * (1 + r);
+  el.result.innerText = "₹" + Math.round(fv);
 };
 
 // ===== QUIZ =====
 const quiz = [
-  {q:"What is SIP?", o:["Stock","Investment method","Loan"], a:1},
-  {q:"ROI means?", o:["Return on Investment","Risk","Rate"], a:0}
+  { q: "What is SIP?", o: ["Stock", "Investment method", "Loan"], a: 1 },
+  { q: "ROI means?", o: ["Return on Investment", "Risk", "Rate"], a: 0 }
 ];
 
-let i=0, score=0;
+let i = 0, score = 0;
 
-levelsGrid.innerHTML = `
+el.levelsGrid.innerHTML = `
 <div class="level-card">
 <h3>Level 1</h3>
 <button class="btn btn-primary" onclick="startQuiz()">Start</button>
 </div>
 `;
 
-window.startQuiz = ()=>{
-  quizSection.classList.remove("hidden");
-  i=0; score=0;
+window.startQuiz = () => {
+  el.quizSection.classList.remove("hidden");
+  i = 0;
+  score = 0;
   loadQ();
 };
 
-function loadQ(){
+function loadQ() {
   const q = quiz[i];
-  questionText.innerText = q.q;
-  optionsWrap.innerHTML="";
+  el.questionText.innerText = q.q;
+  el.optionsWrap.innerHTML = "";
 
-  q.o.forEach((opt,index)=>{
-    const b=document.createElement("button");
-    b.className="option-btn";
-    b.innerText=opt;
+  q.o.forEach((opt, index) => {
+    const b = document.createElement("button");
+    b.className = "option-btn";
+    b.innerText = opt;
 
-    b.onclick=()=>{
-      document.querySelectorAll(".option-btn").forEach(x=>x.disabled=true);
+    b.onclick = () => {
+      document.querySelectorAll(".option-btn").forEach(x => x.disabled = true);
 
-      if(index===q.a){
+      if (index === q.a) {
         b.classList.add("correct");
         score++;
         showToast("Correct");
       } else {
         b.classList.add("wrong");
-        showToast("Wrong","error");
+        showToast("Wrong", "error");
       }
-      nextBtn.disabled=false;
+
+      el.nextBtn.disabled = false;
     };
 
-    optionsWrap.appendChild(b);
+    el.optionsWrap.appendChild(b);
   });
 
-  progressFill.style.width=((i+1)/quiz.length)*100+"%";
-  progressText.innerText=`${i+1}/${quiz.length}`;
-  nextBtn.disabled=true;
+  el.progressFill.style.width = ((i + 1) / quiz.length) * 100 + "%";
+  el.progressText.innerText = `${i + 1}/${quiz.length}`;
+  el.nextBtn.disabled = true;
 }
 
-nextBtn.onclick=()=>{
+el.nextBtn.onclick = () => {
   i++;
-  if(i<quiz.length){
+  if (i < quiz.length) {
     loadQ();
   } else {
-    showToast("Score "+score);
-    quizSection.classList.add("hidden");
-    discountModal.classList.remove("hidden");
+    showToast("Score: " + score);
+    el.quizSection.classList.add("hidden");
+    el.discountModal.classList.remove("hidden");
   }
 };
 
-quitBtn.onclick=()=>{
-  quizSection.classList.add("hidden");
+el.quitBtn.onclick = () => {
+  el.quizSection.classList.add("hidden");
 };
 
 // ===== POPUP =====
-setTimeout(()=> popup.classList.add("show"),2000);
-closePopupBtn.onclick=()=> popup.classList.remove("show");
+setTimeout(() => el.popup.classList.add("show"), 2000);
+el.closePopupBtn.onclick = () => el.popup.classList.remove("show");
 
 // ===== MODAL =====
-closeModalBtn.onclick=()=> discountModal.classList.add("hidden");
-claimOfferBtn.onclick=()=>{
-  showToast("Offer claimed");
-  discountModal.classList.add("hidden");
+el.closeModalBtn.onclick = () => el.discountModal.classList.add("hidden");
+
+el.claimOfferBtn.onclick = () => {
+  showToast("Offer claimed 🎉");
+  el.discountModal.classList.add("hidden");
 };
