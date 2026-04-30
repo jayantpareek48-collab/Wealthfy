@@ -1,27 +1,3 @@
-// ===== SAFE FIREBASE INIT =====
-let auth = null;
-
-try {
-  if (typeof firebase !== "undefined") {
-    const firebaseConfig = {
-      apiKey: "AIzaSyAGuTnP1UVnOFF8yRD3_4TUF8tqjWaaVcI",
-      authDomain: "wealthfy-59f90.firebaseapp.com",
-      projectId: "wealthfy-59f90",
-      storageBucket: "wealthfy-59f90.firebasestorage.app",
-      messagingSenderId: "940910768179",
-      appId: "1:940910768179:web:821645289a507078c3f346",
-      measurementId: "G-BG0J6007BS"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-    auth = firebase.auth();
-  } else {
-    console.error("Firebase not loaded");
-  }
-} catch (e) {
-  console.error("Firebase error:", e);
-}
-
 // ===== SAFE ELEMENT GETTER =====
 const get = (id) => document.getElementById(id);
 
@@ -70,30 +46,23 @@ function showToast(msg, type = "success") {
   setTimeout(() => (el.toast.className = "toast"), 2000);
 }
 
-// ===== AUTH =====
-if (auth) {
-  el.signupBtn?.addEventListener("click", () => {
-    auth.createUserWithEmailAndPassword(el.email.value, el.password.value)
-      .then(() => showToast("Signup success"))
-      .catch(err => showToast(err.message, "error"));
-  });
+// ===== FAKE AUTH (DEMO MODE) =====
+el.signupBtn?.addEventListener("click", () => {
+  showToast("Signup (demo only)");
+  el.userStatus.innerText = "Demo user signed up";
+});
 
-  el.loginBtn?.addEventListener("click", () => {
-    auth.signInWithEmailAndPassword(el.email.value, el.password.value)
-      .then(() => showToast("Login success"))
-      .catch(err => showToast(err.message, "error"));
-  });
+el.loginBtn?.addEventListener("click", () => {
+  showToast("Login (demo only)");
+  el.userStatus.innerText = "Logged in (demo)";
+});
 
-  el.logoutBtn?.addEventListener("click", () => auth.signOut());
+el.logoutBtn?.addEventListener("click", () => {
+  showToast("Logged out");
+  el.userStatus.innerText = "Logged out";
+});
 
-  auth.onAuthStateChanged(user => {
-    if (el.userStatus) {
-      el.userStatus.innerText = user ? `Logged in: ${user.email}` : "Logged out";
-    }
-  });
-}
-
-// ===== SIP =====
+// ===== SIP CALCULATOR =====
 el.calcBtn?.addEventListener("click", () => {
   const P = +el.amount.value;
   const r = +el.rate.value / 100 / 12;
@@ -113,6 +82,7 @@ const quiz = [
 
 let i = 0, score = 0;
 
+// Load Level
 if (el.levelsGrid) {
   el.levelsGrid.innerHTML = `
   <div class="level-card">
@@ -122,7 +92,6 @@ if (el.levelsGrid) {
 }
 
 window.startQuiz = () => {
-  if (!el.quizSection) return;
   el.quizSection.classList.remove("hidden");
   i = 0;
   score = 0;
