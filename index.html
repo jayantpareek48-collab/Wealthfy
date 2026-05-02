@@ -3,84 +3,260 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wealthfy Elite - Learn. Invest. Grow.</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <title>Wealthfy — Learn. Invest. Grow.</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- Background Orbs -->
-  <div class="bg-orb orb-1"></div>
-  <div class="bg-orb orb-2"></div>
 
-  <header class="container shell">
-    <h1 class="title">Wealthfy Elite</h1>
-    <p class="subtitle">Learn. Invest. Grow.</p>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <!-- HEADER -->
+  <header class="glass-nav">
+    <div class="nav-inner">
+      <div class="logo-wrap">
+        <div class="logo-icon">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <polyline points="2,16 7,9 12,13 19,4" stroke="#F5C518" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="19" cy="4" r="2.5" fill="#F5C518"/>
+          </svg>
+        </div>
+        <div>
+          <span class="logo-text">Wealthfy</span>
+          <span class="logo-tag">Learn. Invest. Grow.</span>
+        </div>
+      </div>
+      <div id="headerAuth"></div>
+    </div>
   </header>
 
-  <main class="container layout">
-    <!-- Auth -->
-    <section class="glass-card panel">
-      <h2 class="panel-title">Account (Demo)</h2>
-      <div class="stack">
-        <input id="email" class="field" type="email" placeholder="Email" />
-        <input id="password" class="field" type="password" placeholder="Password" />
-        <div class="btn-row">
-          <button id="signupBtn" class="btn btn-primary">Sign Up</button>
-          <button id="loginBtn" class="btn btn-blue">Login</button>
-          <button id="logoutBtn" class="btn btn-outline">Logout</button>
+  <main class="main-wrap">
+
+    <!-- AUTH SECTION -->
+    <section id="authSection">
+      <!-- Hero + Auth (logged out) -->
+      <div id="heroView">
+        <div class="hero-text">
+          <span class="pill">✦ Smart Finance for Young India</span>
+          <h2 class="hero-h">Build Wealth.<br/><span class="gold-text">Beat Inflation.</span></h2>
+          <p class="hero-sub">Plan your SIPs, test your finance IQ, and grow your money — beautifully.</p>
         </div>
-        <p id="userStatus" class="muted">Demo mode</p>
+
+        <div class="auth-card glass-card">
+          <div class="tab-row">
+            <button class="tab active" id="tabLogin" onclick="switchTab('login')">Login</button>
+            <button class="tab" id="tabSignup" onclick="switchTab('signup')">Sign Up</button>
+          </div>
+
+          <div id="loginForm">
+            <div class="field">
+              <label>Email</label>
+              <input type="email" id="loginEmail" placeholder="you@example.com" />
+            </div>
+            <div class="field">
+              <label>Password</label>
+              <input type="password" id="loginPass" placeholder="••••••••" />
+            </div>
+            <button class="btn-gold" onclick="login()">Login to Dashboard →</button>
+            <p id="loginError" class="err-msg"></p>
+          </div>
+
+          <div id="signupForm" class="hidden">
+            <div class="field">
+              <label>Full Name</label>
+              <input type="text" id="signupName" placeholder="Your name" />
+            </div>
+            <div class="field">
+              <label>Email</label>
+              <input type="email" id="signupEmail" placeholder="you@example.com" />
+            </div>
+            <div class="field">
+              <label>Password</label>
+              <input type="password" id="signupPass" placeholder="Create password" />
+            </div>
+            <button class="btn-gold" onclick="signup()">Create Account →</button>
+            <p id="signupError" class="err-msg"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard (logged in) -->
+      <div id="dashboardView" class="hidden">
+        <div class="dash-header">
+          <div>
+            <p class="dash-greeting">Welcome back,</p>
+            <h2 class="dash-name" id="welcomeName">User</h2>
+          </div>
+          <div class="session-badge"><span class="pulse-dot"></span>Active</div>
+        </div>
+        <div class="stats-row">
+          <div class="stat-card glass-card">
+            <p class="stat-label">SIP Plans</p>
+            <p class="stat-val" id="statSip">0</p>
+          </div>
+          <div class="stat-card glass-card">
+            <p class="stat-label">Best Score</p>
+            <p class="stat-val" id="statScore">—</p>
+          </div>
+          <div class="stat-card glass-card">
+            <p class="stat-label">Streak</p>
+            <p class="stat-val">1 🔥</p>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- SIP Calculator -->
-    <section class="glass-card panel">
-      <h2 class="panel-title">SIP Calculator</h2>
-      <div class="stack">
-        <input id="amount" type="number" class="field" placeholder="Monthly Investment (₹)" value="5000" />
-        <input id="rate" type="number" class="field" placeholder="Expected Return (%)" value="12" />
-        <input id="years" type="number" class="field" placeholder="Years" value="10" />
-        <button id="calcBtn" class="btn btn-primary">Calculate</button>
-        <p id="result" class="muted"></p>
-        <canvas id="sipChart" class="mt-4" style="max-height: 240px;"></canvas>
+    <!-- TOOL NAV -->
+    <div id="toolNav" class="tool-nav hidden">
+      <button class="tool-tab active" id="btnSip" onclick="showTool('sip')">📈 SIP Calculator</button>
+      <button class="tool-tab" id="btnQuiz" onclick="showTool('quiz')">🧠 Quiz Arena</button>
+    </div>
+
+    <!-- SIP CALCULATOR -->
+    <section id="sipTool" class="hidden">
+      <div class="glass-card tool-card">
+        <div class="tool-header">
+          <h3 class="tool-title">SIP Calculator</h3>
+          <p class="tool-sub">Estimate your mutual fund wealth</p>
+        </div>
+        <div class="sip-layout">
+          <div class="sip-inputs">
+            <div class="field">
+              <label>Monthly Investment</label>
+              <div class="input-affixed">
+                <span class="affix left">₹</span>
+                <input type="number" id="sipAmount" value="5000" min="500" max="100000" oninput="syncToRange('sipAmount','sipAmountR');calcSIP()" />
+              </div>
+              <input type="range" id="sipAmountR" class="slider" min="500" max="100000" step="500" value="5000" oninput="syncToInput('sipAmountR','sipAmount');calcSIP()" />
+              <div class="range-labels"><span>₹500</span><span>₹1L</span></div>
+            </div>
+            <div class="field">
+              <label>Expected Return (% / yr)</label>
+              <div class="input-affixed">
+                <input type="number" id="sipRate" value="12" min="1" max="30" oninput="syncToRange('sipRate','sipRateR');calcSIP()" />
+                <span class="affix right">%</span>
+              </div>
+              <input type="range" id="sipRateR" class="slider" min="1" max="30" step="0.5" value="12" oninput="syncToInput('sipRateR','sipRate');calcSIP()" />
+              <div class="range-labels"><span>1%</span><span>30%</span></div>
+            </div>
+            <div class="field">
+              <label>Time Period (Years)</label>
+              <div class="input-affixed">
+                <input type="number" id="sipYears" value="10" min="1" max="40" oninput="syncToRange('sipYears','sipYearsR');calcSIP()" />
+                <span class="affix right">yrs</span>
+              </div>
+              <input type="range" id="sipYearsR" class="slider" min="1" max="40" step="1" value="10" oninput="syncToInput('sipYearsR','sipYears');calcSIP()" />
+              <div class="range-labels"><span>1 yr</span><span>40 yrs</span></div>
+            </div>
+          </div>
+
+          <div class="sip-right">
+            <div class="chart-wrap">
+              <canvas id="sipChart"></canvas>
+              <div class="chart-center">
+                <p class="chart-c-label">Maturity</p>
+                <p class="chart-c-val" id="chartMaturity">—</p>
+              </div>
+            </div>
+            <div class="results-grid">
+              <div class="result-item">
+                <p class="result-label">Invested</p>
+                <p class="result-val c-invested" id="resInvested">—</p>
+              </div>
+              <div class="result-item">
+                <p class="result-label">Est. Gains</p>
+                <p class="result-val c-gains" id="resGains">—</p>
+              </div>
+              <div class="result-item result-full">
+                <p class="result-label">Total Maturity</p>
+                <p class="result-val c-maturity" id="resMaturity">—</p>
+              </div>
+            </div>
+            <button class="btn-gold w-full mt-4" onclick="saveSIP()">Save This Plan ✓</button>
+            <p id="sipSaveMsg" class="sip-save-msg"></p>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- Quiz Arena -->
-    <section class="glass-card panel panel-wide">
-      <div class="panel-head">
-        <h2 class="panel-title">Quiz Arena</h2>
-        <p id="quizMeta" class="muted">Choose a level</p>
-      </div>
-      
-      <div id="levelsGrid" class="levels-grid"></div>
+    <!-- QUIZ ARENA -->
+    <section id="quizTool" class="hidden">
+      <div class="glass-card tool-card">
 
-      <div id="quizSection" class="quiz-shell hidden">
-        <div class="progress-track">
-          <div id="progressFill" class="progress-fill"></div>
+        <!-- Level Select -->
+        <div id="quizHome">
+          <div class="tool-header">
+            <h3 class="tool-title">Quiz Arena</h3>
+            <p class="tool-sub">Test your financial intelligence</p>
+          </div>
+          <div class="level-grid">
+            <div class="level-card" onclick="startQuiz('beginner')">
+              <div class="level-icon">🌱</div>
+              <h4 class="level-title">Beginner</h4>
+              <p class="level-desc">Savings, inflation, budgeting &amp; basic concepts</p>
+              <span class="level-badge badge-green">10 Questions</span>
+            </div>
+            <div class="level-card" onclick="startQuiz('intermediate')">
+              <div class="level-icon">🚀</div>
+              <h4 class="level-title">Intermediate</h4>
+              <p class="level-desc">Mutual funds, SIPs, bonds, equity &amp; markets</p>
+              <span class="level-badge badge-gold">10 Questions</span>
+            </div>
+          </div>
         </div>
-        <p id="progressText" class="muted"></p>
-        <h3 id="questionText" class="mb-4"></h3>
-        <div id="optionsWrap" class="options"></div>
-        <div class="btn-row">
-          <button id="nextBtn" class="btn btn-blue" disabled>Next</button>
-          <button id="quitBtn" class="btn btn-outline">Quit</button>
+
+        <!-- Quiz Play -->
+        <div id="quizPlay" class="hidden">
+          <div class="quiz-topbar">
+            <div style="display:flex;align-items:center;gap:10px">
+              <span id="quizLevelLabel" class="quiz-level-tag"></span>
+              <span id="quizQNum" class="quiz-qnum"></span>
+            </div>
+            <button class="quit-btn" onclick="quitQuiz()">✕ Quit</button>
+          </div>
+          <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+          <p class="quiz-question" id="quizQuestion"></p>
+          <div class="options-grid" id="optionsGrid"></div>
+          <div id="nextWrap" class="next-wrap hidden">
+            <div id="explanationBox" class="explanation"></div>
+            <button class="btn-gold" onclick="nextQuestion()">Next Question →</button>
+          </div>
         </div>
+
+        <!-- Result -->
+        <div id="quizResult" class="hidden">
+          <div class="result-screen">
+            <div class="result-emoji" id="resultEmoji"></div>
+            <h3 class="result-title" id="resultTitle"></h3>
+            <p class="result-sub" id="resultSub"></p>
+            <div class="score-ring-wrap">
+              <svg class="score-ring" viewBox="0 0 120 120">
+                <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="10"/>
+                <circle cx="60" cy="60" r="50" fill="none" stroke="#F5C518" stroke-width="10"
+                  stroke-linecap="round" stroke-dasharray="314" id="scoreArc"
+                  stroke-dashoffset="314" transform="rotate(-90 60 60)"/>
+              </svg>
+              <div class="score-inner">
+                <span class="score-big" id="scoreBig">0</span>
+                <span class="score-of">/10</span>
+              </div>
+            </div>
+            <div class="result-actions">
+              <button class="btn-gold" onclick="retryQuiz()">Try Again</button>
+              <button class="btn-outline" onclick="quitQuiz()">Change Level</button>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
   </main>
 
-  <!-- Popup -->
-  <div id="popup" class="popup glass-card">
-    <p>Welcome to Wealthfy Elite! Start your journey 🚀</p>
-    <button id="closePopupBtn" class="btn btn-outline btn-sm">Close</button>
-  </div>
-
-  <!-- Toast -->
-  <div id="toast" class="toast"></div>
-
-  <script src="script.js" defer></script>
+  <script src="script.js"></script>
 </body>
 </html>
