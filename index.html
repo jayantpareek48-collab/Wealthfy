@@ -3,112 +3,84 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wealthfy Elite - Finance Quiz</title>
-
-  <!-- Fonts -->
+  <title>Wealthfy Elite - Learn. Invest. Grow.</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="styles.css" />
-
-  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="styles.css" />
 </head>
-
 <body>
+  <!-- Background Orbs -->
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
 
-<!-- Background -->
-<div class="bg-orb orb-1"></div>
-<div class="bg-orb orb-2"></div>
+  <header class="container shell">
+    <h1 class="title">Wealthfy Elite</h1>
+    <p class="subtitle">Learn. Invest. Grow.</p>
+  </header>
 
-<header class="container shell">
-  <h1 class="title">Wealthfy Elite</h1>
-  <p class="subtitle">Learn. Invest. Grow.</p>
-</header>
-
-<main class="container layout">
-
-  <!-- AUTH (DEMO MODE) -->
-  <section class="glass-card panel">
-    <h2 class="panel-title">Account (Demo)</h2>
-    <div class="stack">
-      <input id="email" class="field" type="email" placeholder="Email" autocomplete="email"/>
-      <input id="password" class="field" type="password" placeholder="Password" autocomplete="current-password"/>
-
-      <div class="btn-row">
-        <button type="button" id="signupBtn" class="btn btn-primary">Sign Up</button>
-        <button type="button" id="loginBtn" class="btn btn-blue">Login</button>
-        <button type="button" id="logoutBtn" class="btn btn-outline">Logout</button>
+  <main class="container layout">
+    <!-- Auth -->
+    <section class="glass-card panel">
+      <h2 class="panel-title">Account (Demo)</h2>
+      <div class="stack">
+        <input id="email" class="field" type="email" placeholder="Email" />
+        <input id="password" class="field" type="password" placeholder="Password" />
+        <div class="btn-row">
+          <button id="signupBtn" class="btn btn-primary">Sign Up</button>
+          <button id="loginBtn" class="btn btn-blue">Login</button>
+          <button id="logoutBtn" class="btn btn-outline">Logout</button>
+        </div>
+        <p id="userStatus" class="muted">Demo mode</p>
       </div>
+    </section>
 
-      <p id="userStatus" class="muted">Demo mode (no real login)</p>
-    </div>
-  </section>
-
-  <!-- SIP -->
-  <section class="glass-card panel">
-    <h2 class="panel-title">SIP Calculator</h2>
-    <div class="stack">
-      <input id="amount" type="number" class="field" placeholder="Monthly amount"/>
-      <input id="rate" type="number" class="field" placeholder="Return (%)"/>
-      <input id="years" type="number" class="field" placeholder="Years"/>
-
-      <button type="button" id="calcBtn" class="btn btn-primary">Calculate</button>
-      <p id="result" class="muted"></p>
-    </div>
-  </section>
-
-  <!-- QUIZ -->
-  <section class="glass-card panel panel-wide">
-    <div class="panel-head">
-      <h2 class="panel-title">Quiz Arena</h2>
-      <p id="quizMeta" class="muted">Choose a level</p>
-    </div>
-
-    <div id="levelsGrid" class="levels-grid"></div>
-
-    <div id="quizSection" class="quiz-shell hidden">
-      <div class="progress-track">
-        <div id="progressFill" class="progress-fill"></div>
+    <!-- SIP Calculator -->
+    <section class="glass-card panel">
+      <h2 class="panel-title">SIP Calculator</h2>
+      <div class="stack">
+        <input id="amount" type="number" class="field" placeholder="Monthly Investment (₹)" value="5000" />
+        <input id="rate" type="number" class="field" placeholder="Expected Return (%)" value="12" />
+        <input id="years" type="number" class="field" placeholder="Years" value="10" />
+        <button id="calcBtn" class="btn btn-primary">Calculate</button>
+        <p id="result" class="muted"></p>
+        <canvas id="sipChart" class="mt-4" style="max-height: 240px;"></canvas>
       </div>
+    </section>
 
-      <p id="progressText" class="muted"></p>
-      <h3 id="questionText"></h3>
-
-      <div id="optionsWrap" class="options"></div>
-
-      <div class="btn-row">
-        <button type="button" id="nextBtn" class="btn btn-blue" disabled>Next</button>
-        <button type="button" id="quitBtn" class="btn btn-outline">Quit</button>
+    <!-- Quiz Arena -->
+    <section class="glass-card panel panel-wide">
+      <div class="panel-head">
+        <h2 class="panel-title">Quiz Arena</h2>
+        <p id="quizMeta" class="muted">Choose a level</p>
       </div>
-    </div>
-  </section>
+      
+      <div id="levelsGrid" class="levels-grid"></div>
 
-</main>
+      <div id="quizSection" class="quiz-shell hidden">
+        <div class="progress-track">
+          <div id="progressFill" class="progress-fill"></div>
+        </div>
+        <p id="progressText" class="muted"></p>
+        <h3 id="questionText" class="mb-4"></h3>
+        <div id="optionsWrap" class="options"></div>
+        <div class="btn-row">
+          <button id="nextBtn" class="btn btn-blue" disabled>Next</button>
+          <button id="quitBtn" class="btn btn-outline">Quit</button>
+        </div>
+      </div>
+    </section>
+  </main>
 
-<!-- POPUP -->
-<div id="popup" class="popup glass-card">
-  <p>Start your financial journey 🚀</p>
-  <button type="button" id="closePopupBtn" class="btn btn-outline btn-sm">Close</button>
-</div>
-
-<!-- TOAST -->
-<div id="toast" class="toast"></div>
-
-<!-- MODAL -->
-<div id="discountModal" class="modal-backdrop hidden">
-  <div class="modal-card glass-card">
-    <h3>Level 2 Unlocked 🎉</h3>
-    <p>Claim your reward</p>
-    <div class="btn-row">
-      <button type="button" id="claimOfferBtn" class="btn btn-primary">Claim</button>
-      <button type="button" id="closeModalBtn" class="btn btn-outline">Close</button>
-    </div>
+  <!-- Popup -->
+  <div id="popup" class="popup glass-card">
+    <p>Welcome to Wealthfy Elite! Start your journey 🚀</p>
+    <button id="closePopupBtn" class="btn btn-outline btn-sm">Close</button>
   </div>
-</div>
 
-<!-- JS -->
-<script src="script.js" defer></script>
+  <!-- Toast -->
+  <div id="toast" class="toast"></div>
 
+  <script src="script.js" defer></script>
 </body>
 </html>
