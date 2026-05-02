@@ -9,6 +9,212 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ── Extra styles for new sections ── */
+    .nav-links { display: flex; gap: 6px; align-items: center; }
+    .nav-link {
+      background: transparent;
+      border: 1px solid rgba(245,197,24,0.2);
+      color: rgba(255,255,255,0.7);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .nav-link:hover, .nav-link.active {
+      background: rgba(245,197,24,0.12);
+      color: #F5C518;
+      border-color: rgba(245,197,24,0.5);
+    }
+
+    /* Tool tabs */
+    .tool-tab-bar {
+      display: flex; gap: 8px; flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+    .calc-tab {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.6);
+      padding: 7px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .calc-tab:hover { color: #F5C518; border-color: rgba(245,197,24,0.3); }
+    .calc-tab.active {
+      background: rgba(245,197,24,0.12);
+      border-color: rgba(245,197,24,0.5);
+      color: #F5C518;
+    }
+    .calc-section { display: none; }
+    .calc-section.active { display: block; }
+
+    /* Result cards */
+    .res-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px; margin-top: 1.2rem;
+    }
+    .res-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+    .res-card .rl { font-size: 11px; color: rgba(255,255,255,0.45); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .res-card .rv { font-size: 18px; font-weight: 600; color: #fff; font-family: 'Syne', sans-serif; }
+    .res-card.gold .rv { color: #F5C518; }
+
+    /* Loan type buttons */
+    .loan-tabs { display: flex; gap: 8px; margin-bottom: 1.2rem; flex-wrap: wrap; }
+    .loan-tab {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.6);
+      padding: 6px 14px; border-radius: 20px;
+      font-size: 13px; font-family: 'DM Sans', sans-serif;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .loan-tab.active { background: rgba(245,197,24,0.12); border-color: rgba(245,197,24,0.5); color: #F5C518; }
+
+    /* Compare cards */
+    .compare-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-top: 1.2rem; }
+    .compare-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px; padding: 14px; text-align: center;
+    }
+    .compare-card.best { border-color: rgba(245,197,24,0.6); background: rgba(245,197,24,0.07); }
+    .compare-card .ct { font-size: 12px; color: rgba(255,255,255,0.45); margin-bottom: 6px; }
+    .compare-card .cv { font-size: 16px; font-weight: 600; color: #fff; font-family: 'Syne', sans-serif; }
+    .compare-card .cbadge {
+      display: inline-block; font-size: 10px;
+      background: rgba(245,197,24,0.2); color: #F5C518;
+      padding: 2px 8px; border-radius: 20px; margin-bottom: 6px;
+    }
+    .compare-card .cnote { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 4px; }
+
+    /* Net worth */
+    .nw-section { margin-bottom: 1.5rem; }
+    .nw-section-title {
+      font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.5);
+      text-transform: uppercase; letter-spacing: 0.06em;
+      margin-bottom: 10px; padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .nw-row {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 8px;
+    }
+    .nw-row label { font-size: 13px; color: rgba(255,255,255,0.6); flex: 1; }
+    .nw-row input {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px; padding: 8px 12px;
+      color: #fff; font-size: 14px; width: 140px;
+      font-family: 'DM Sans', sans-serif;
+      outline: none; transition: border-color 0.2s;
+    }
+    .nw-row input:focus { border-color: rgba(245,197,24,0.4); }
+    .nw-summary {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 10px;
+      margin-top: 1.5rem;
+    }
+    .nw-sum-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px; padding: 14px; text-align: center;
+    }
+    .nw-sum-card.positive { border-color: rgba(34,197,94,0.4); background: rgba(34,197,94,0.06); }
+    .nw-sum-card.negative { border-color: rgba(239,68,68,0.4); background: rgba(239,68,68,0.06); }
+    .nw-sum-card.total { border-color: rgba(245,197,24,0.4); background: rgba(245,197,24,0.07); }
+    .nw-sum-card .nl { font-size: 11px; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+    .nw-sum-card .nv { font-size: 20px; font-weight: 700; font-family: 'Syne', sans-serif; }
+    .nw-sum-card.positive .nv { color: #4ade80; }
+    .nw-sum-card.negative .nv { color: #f87171; }
+    .nw-sum-card.total .nv { color: #F5C518; }
+
+    /* About page */
+    .about-wrap { max-width: 640px; margin: 0 auto; }
+    .about-avatar {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: rgba(245,197,24,0.15);
+      border: 2px solid rgba(245,197,24,0.35);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; font-weight: 700; color: #F5C518;
+      font-family: 'Syne', sans-serif;
+    }
+    .about-badge {
+      display: inline-block; font-size: 11px; padding: 3px 10px;
+      border-radius: 20px; font-weight: 500; margin-right: 6px; margin-bottom: 6px;
+    }
+    .about-quote {
+      border-left: 3px solid #F5C518;
+      padding: 12px 18px;
+      background: rgba(245,197,24,0.06);
+      border-radius: 0 10px 10px 0;
+      font-family: 'Syne', sans-serif;
+      font-size: 17px; line-height: 1.6;
+      color: rgba(255,255,255,0.9);
+      margin: 1.5rem 0;
+    }
+    .timeline { border-left: 1.5px solid rgba(255,255,255,0.15); padding-left: 20px; margin-left: 6px; }
+    .titem { margin-bottom: 20px; position: relative; }
+    .titem::before {
+      content: ''; width: 8px; height: 8px; border-radius: 50%;
+      background: #F5C518; position: absolute; left: -25px; top: 5px;
+    }
+    .tyear { font-size: 11px; color: #F5C518; margin-bottom: 3px; font-weight: 600; letter-spacing: 0.05em; }
+    .tdesc { font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.55; }
+    .belief-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px; padding: 14px 16px;
+      margin-bottom: 10px; display: flex; gap: 14px; align-items: flex-start;
+    }
+    .belief-icon {
+      width: 34px; height: 34px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; font-size: 16px;
+    }
+    .about-stat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin: 1.2rem 0; }
+    .about-stat {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px; padding: 14px; text-align: center;
+    }
+    .about-stat .asn { font-size: 22px; font-weight: 700; color: #F5C518; font-family: 'Syne', sans-serif; }
+    .about-stat .asl { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 3px; }
+    .about-divider { border: none; border-top: 1px solid rgba(255,255,255,0.07); margin: 1.5rem 0; }
+    .about-section-label {
+      font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.35);
+      letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px;
+    }
+
+    /* Slider label row */
+    .calc-row { margin-bottom: 1.1rem; }
+    .calc-row label { font-size: 13px; color: rgba(255,255,255,0.55); display: block; margin-bottom: 6px; }
+    .calc-row-inner { display: flex; align-items: center; gap: 10px; }
+    .calc-row-inner input[type=range] { flex: 1; }
+    .calc-row-inner .cval {
+      font-size: 13px; font-weight: 600; color: #F5C518;
+      min-width: 80px; text-align: right; font-family: 'Syne', sans-serif;
+    }
+
+    /* Page visibility */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    @media (max-width: 500px) {
+      .compare-grid { grid-template-columns: 1fr; }
+      .nw-summary { grid-template-columns: 1fr; }
+      .about-stat-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
 </head>
 <body>
 
@@ -31,232 +237,640 @@
           <span class="logo-tag">Learn. Invest. Grow.</span>
         </div>
       </div>
-      <div id="headerAuth"></div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div class="nav-links">
+          <button class="nav-link active" onclick="showPage('home')">Home</button>
+          <button class="nav-link" onclick="showPage('calculators')">Calculators</button>
+          <button class="nav-link" onclick="showPage('networth')">Net Worth</button>
+          <button class="nav-link" onclick="showPage('about')">About</button>
+        </div>
+        <div id="headerAuth"></div>
+      </div>
     </div>
   </header>
 
   <main class="main-wrap">
 
-    <!-- AUTH SECTION -->
-    <section id="authSection">
-      <!-- Hero + Auth (logged out) -->
-      <div id="heroView">
-        <div class="hero-text">
-          <span class="pill">✦ Smart Finance for Young India</span>
-          <h2 class="hero-h">Build Wealth.<br/><span class="gold-text">Beat Inflation.</span></h2>
-          <p class="hero-sub">Plan your SIPs, test your finance IQ, and grow your money — beautifully.</p>
-        </div>
+    <!-- ══════════ PAGE: HOME ══════════ -->
+    <div class="page active" id="page-home">
 
-        <div class="auth-card glass-card">
-          <div class="tab-row">
-            <button class="tab active" id="tabLogin" onclick="switchTab('login')">Login</button>
-            <button class="tab" id="tabSignup" onclick="switchTab('signup')">Sign Up</button>
+      <!-- AUTH SECTION -->
+      <section id="authSection">
+        <div id="heroView">
+          <div class="hero-text">
+            <span class="pill">✦ Smart Finance for Young India</span>
+            <h2 class="hero-h">Build Wealth.<br/><span class="gold-text">Beat Inflation.</span></h2>
+            <p class="hero-sub">Plan your SIPs, test your finance IQ, and grow your money — beautifully.</p>
           </div>
 
-          <div id="loginForm">
-            <div class="field">
-              <label>Email</label>
-              <input type="email" id="loginEmail" placeholder="you@example.com" />
+          <div class="auth-card glass-card">
+            <div class="tab-row">
+              <button class="tab active" id="tabLogin" onclick="switchTab('login')">Login</button>
+              <button class="tab" id="tabSignup" onclick="switchTab('signup')">Sign Up</button>
             </div>
-            <div class="field">
-              <label>Password</label>
-              <input type="password" id="loginPass" placeholder="••••••••" />
+            <div id="loginForm">
+              <div class="field"><label>Email</label><input type="email" id="loginEmail" placeholder="you@example.com" /></div>
+              <div class="field"><label>Password</label><input type="password" id="loginPass" placeholder="••••••••" /></div>
+              <button class="btn-gold" onclick="login()">Login to Dashboard →</button>
+              <p id="loginError" class="err-msg"></p>
             </div>
-            <button class="btn-gold" onclick="login()">Login to Dashboard →</button>
-            <p id="loginError" class="err-msg"></p>
-          </div>
-
-          <div id="signupForm" class="hidden">
-            <div class="field">
-              <label>Full Name</label>
-              <input type="text" id="signupName" placeholder="Your name" />
+            <div id="signupForm" class="hidden">
+              <div class="field"><label>Full Name</label><input type="text" id="signupName" placeholder="Your name" /></div>
+              <div class="field"><label>Email</label><input type="email" id="signupEmail" placeholder="you@example.com" /></div>
+              <div class="field"><label>Password</label><input type="password" id="signupPass" placeholder="Create password" /></div>
+              <button class="btn-gold" onclick="signup()">Create Account →</button>
+              <p id="signupError" class="err-msg"></p>
             </div>
-            <div class="field">
-              <label>Email</label>
-              <input type="email" id="signupEmail" placeholder="you@example.com" />
-            </div>
-            <div class="field">
-              <label>Password</label>
-              <input type="password" id="signupPass" placeholder="Create password" />
-            </div>
-            <button class="btn-gold" onclick="signup()">Create Account →</button>
-            <p id="signupError" class="err-msg"></p>
           </div>
         </div>
+
+        <!-- Dashboard (logged in) -->
+        <div id="dashboardView" class="hidden">
+          <div class="dash-header">
+            <div>
+              <p class="dash-greeting">Welcome back,</p>
+              <h2 class="dash-name" id="welcomeName">User</h2>
+            </div>
+            <div class="session-badge"><span class="pulse-dot"></span>Active</div>
+          </div>
+          <div class="stats-row">
+            <div class="stat-card glass-card"><p class="stat-label">SIP Plans</p><p class="stat-val" id="statSip">0</p></div>
+            <div class="stat-card glass-card"><p class="stat-label">Best Score</p><p class="stat-val" id="statScore">—</p></div>
+            <div class="stat-card glass-card"><p class="stat-label">Streak</p><p class="stat-val">1 🔥</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TOOL NAV -->
+      <div id="toolNav" class="tool-nav hidden">
+        <button class="tool-tab active" id="btnSip" onclick="showTool('sip')">📈 SIP Calculator</button>
+        <button class="tool-tab" id="btnQuiz" onclick="showTool('quiz')">🧠 Quiz Arena</button>
       </div>
 
-      <!-- Dashboard (logged in) -->
-      <div id="dashboardView" class="hidden">
-        <div class="dash-header">
-          <div>
-            <p class="dash-greeting">Welcome back,</p>
-            <h2 class="dash-name" id="welcomeName">User</h2>
+      <!-- SIP CALCULATOR -->
+      <section id="sipTool" class="hidden">
+        <div class="glass-card tool-card">
+          <div class="tool-header">
+            <h3 class="tool-title">SIP Calculator</h3>
+            <p class="tool-sub">Estimate your mutual fund wealth</p>
           </div>
-          <div class="session-badge"><span class="pulse-dot"></span>Active</div>
+          <div class="sip-layout">
+            <div class="sip-inputs">
+              <div class="field">
+                <label>Monthly Investment</label>
+                <div class="input-affixed"><span class="affix left">₹</span><input type="number" id="sipAmount" value="5000" min="500" max="100000" oninput="syncToRange('sipAmount','sipAmountR');calcSIP()" /></div>
+                <input type="range" id="sipAmountR" class="slider" min="500" max="100000" step="500" value="5000" oninput="syncToInput('sipAmountR','sipAmount');calcSIP()" />
+                <div class="range-labels"><span>₹500</span><span>₹1L</span></div>
+              </div>
+              <div class="field">
+                <label>Expected Return (% / yr)</label>
+                <div class="input-affixed"><input type="number" id="sipRate" value="12" min="1" max="30" oninput="syncToRange('sipRate','sipRateR');calcSIP()" /><span class="affix right">%</span></div>
+                <input type="range" id="sipRateR" class="slider" min="1" max="30" step="0.5" value="12" oninput="syncToInput('sipRateR','sipRate');calcSIP()" />
+                <div class="range-labels"><span>1%</span><span>30%</span></div>
+              </div>
+              <div class="field">
+                <label>Time Period (Years)</label>
+                <div class="input-affixed"><input type="number" id="sipYears" value="10" min="1" max="40" oninput="syncToRange('sipYears','sipYearsR');calcSIP()" /><span class="affix right">yrs</span></div>
+                <input type="range" id="sipYearsR" class="slider" min="1" max="40" step="1" value="10" oninput="syncToInput('sipYearsR','sipYears');calcSIP()" />
+                <div class="range-labels"><span>1 yr</span><span>40 yrs</span></div>
+              </div>
+            </div>
+            <div class="sip-right">
+              <div class="chart-wrap">
+                <canvas id="sipChart"></canvas>
+                <div class="chart-center"><p class="chart-c-label">Maturity</p><p class="chart-c-val" id="chartMaturity">—</p></div>
+              </div>
+              <div class="results-grid">
+                <div class="result-item"><p class="result-label">Invested</p><p class="result-val c-invested" id="resInvested">—</p></div>
+                <div class="result-item"><p class="result-label">Est. Gains</p><p class="result-val c-gains" id="resGains">—</p></div>
+                <div class="result-item result-full"><p class="result-label">Total Maturity</p><p class="result-val c-maturity" id="resMaturity">—</p></div>
+              </div>
+              <button class="btn-gold w-full mt-4" onclick="saveSIP()">Save This Plan ✓</button>
+              <p id="sipSaveMsg" class="sip-save-msg"></p>
+            </div>
+          </div>
         </div>
-        <div class="stats-row">
-          <div class="stat-card glass-card">
-            <p class="stat-label">SIP Plans</p>
-            <p class="stat-val" id="statSip">0</p>
+      </section>
+
+      <!-- QUIZ ARENA -->
+      <section id="quizTool" class="hidden">
+        <div class="glass-card tool-card">
+          <div id="quizHome">
+            <div class="tool-header"><h3 class="tool-title">Quiz Arena</h3><p class="tool-sub">Test your financial intelligence</p></div>
+            <div class="level-grid">
+              <div class="level-card" onclick="startQuiz('beginner')">
+                <div class="level-icon">🌱</div>
+                <h4 class="level-title">Beginner</h4>
+                <p class="level-desc">Savings, inflation, budgeting &amp; basic concepts</p>
+                <span class="level-badge badge-green">10 Questions</span>
+              </div>
+              <div class="level-card" onclick="startQuiz('intermediate')">
+                <div class="level-icon">🚀</div>
+                <h4 class="level-title">Intermediate</h4>
+                <p class="level-desc">Mutual funds, SIPs, bonds, equity &amp; markets</p>
+                <span class="level-badge badge-gold">10 Questions</span>
+              </div>
+            </div>
           </div>
-          <div class="stat-card glass-card">
-            <p class="stat-label">Best Score</p>
-            <p class="stat-val" id="statScore">—</p>
+          <div id="quizPlay" class="hidden">
+            <div class="quiz-topbar">
+              <div style="display:flex;align-items:center;gap:10px"><span id="quizLevelLabel" class="quiz-level-tag"></span><span id="quizQNum" class="quiz-qnum"></span></div>
+              <button class="quit-btn" onclick="quitQuiz()">✕ Quit</button>
+            </div>
+            <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+            <p class="quiz-question" id="quizQuestion"></p>
+            <div class="options-grid" id="optionsGrid"></div>
+            <div id="nextWrap" class="next-wrap hidden">
+              <div id="explanationBox" class="explanation"></div>
+              <button class="btn-gold" onclick="nextQuestion()">Next Question →</button>
+            </div>
           </div>
-          <div class="stat-card glass-card">
-            <p class="stat-label">Streak</p>
-            <p class="stat-val">1 🔥</p>
+          <div id="quizResult" class="hidden">
+            <div class="result-screen">
+              <div class="result-emoji" id="resultEmoji"></div>
+              <h3 class="result-title" id="resultTitle"></h3>
+              <p class="result-sub" id="resultSub"></p>
+              <div class="score-ring-wrap">
+                <svg class="score-ring" viewBox="0 0 120 120">
+                  <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="10"/>
+                  <circle cx="60" cy="60" r="50" fill="none" stroke="#F5C518" stroke-width="10" stroke-linecap="round" stroke-dasharray="314" id="scoreArc" stroke-dashoffset="314" transform="rotate(-90 60 60)"/>
+                </svg>
+                <div class="score-inner"><span class="score-big" id="scoreBig">0</span><span class="score-of">/10</span></div>
+              </div>
+              <div class="result-actions">
+                <button class="btn-gold" onclick="retryQuiz()">Try Again</button>
+                <button class="btn-outline" onclick="quitQuiz()">Change Level</button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- TOOL NAV -->
-    <div id="toolNav" class="tool-nav hidden">
-      <button class="tool-tab active" id="btnSip" onclick="showTool('sip')">📈 SIP Calculator</button>
-      <button class="tool-tab" id="btnQuiz" onclick="showTool('quiz')">🧠 Quiz Arena</button>
-    </div>
+    </div><!-- end page-home -->
 
-    <!-- SIP CALCULATOR -->
-    <section id="sipTool" class="hidden">
+
+    <!-- ══════════ PAGE: CALCULATORS ══════════ -->
+    <div class="page" id="page-calculators">
       <div class="glass-card tool-card">
         <div class="tool-header">
-          <h3 class="tool-title">SIP Calculator</h3>
-          <p class="tool-sub">Estimate your mutual fund wealth</p>
+          <h3 class="tool-title">Finance Calculators</h3>
+          <p class="tool-sub">Plan smarter with every tool you need</p>
         </div>
-        <div class="sip-layout">
-          <div class="sip-inputs">
-            <div class="field">
-              <label>Monthly Investment</label>
-              <div class="input-affixed">
-                <span class="affix left">₹</span>
-                <input type="number" id="sipAmount" value="5000" min="500" max="100000" oninput="syncToRange('sipAmount','sipAmountR');calcSIP()" />
-              </div>
-              <input type="range" id="sipAmountR" class="slider" min="500" max="100000" step="500" value="5000" oninput="syncToInput('sipAmountR','sipAmount');calcSIP()" />
-              <div class="range-labels"><span>₹500</span><span>₹1L</span></div>
-            </div>
-            <div class="field">
-              <label>Expected Return (% / yr)</label>
-              <div class="input-affixed">
-                <input type="number" id="sipRate" value="12" min="1" max="30" oninput="syncToRange('sipRate','sipRateR');calcSIP()" />
-                <span class="affix right">%</span>
-              </div>
-              <input type="range" id="sipRateR" class="slider" min="1" max="30" step="0.5" value="12" oninput="syncToInput('sipRateR','sipRate');calcSIP()" />
-              <div class="range-labels"><span>1%</span><span>30%</span></div>
-            </div>
-            <div class="field">
-              <label>Time Period (Years)</label>
-              <div class="input-affixed">
-                <input type="number" id="sipYears" value="10" min="1" max="40" oninput="syncToRange('sipYears','sipYearsR');calcSIP()" />
-                <span class="affix right">yrs</span>
-              </div>
-              <input type="range" id="sipYearsR" class="slider" min="1" max="40" step="1" value="10" oninput="syncToInput('sipYearsR','sipYears');calcSIP()" />
-              <div class="range-labels"><span>1 yr</span><span>40 yrs</span></div>
-            </div>
-          </div>
 
-          <div class="sip-right">
-            <div class="chart-wrap">
-              <canvas id="sipChart"></canvas>
-              <div class="chart-center">
-                <p class="chart-c-label">Maturity</p>
-                <p class="chart-c-val" id="chartMaturity">—</p>
-              </div>
-            </div>
-            <div class="results-grid">
-              <div class="result-item">
-                <p class="result-label">Invested</p>
-                <p class="result-val c-invested" id="resInvested">—</p>
-              </div>
-              <div class="result-item">
-                <p class="result-label">Est. Gains</p>
-                <p class="result-val c-gains" id="resGains">—</p>
-              </div>
-              <div class="result-item result-full">
-                <p class="result-label">Total Maturity</p>
-                <p class="result-val c-maturity" id="resMaturity">—</p>
-              </div>
-            </div>
-            <button class="btn-gold w-full mt-4" onclick="saveSIP()">Save This Plan ✓</button>
-            <p id="sipSaveMsg" class="sip-save-msg"></p>
+        <div class="tool-tab-bar">
+          <button class="calc-tab active" onclick="switchCalc('goal',this)">Goal SIP</button>
+          <button class="calc-tab" onclick="switchCalc('lumpsum',this)">Lump Sum vs SIP</button>
+          <button class="calc-tab" onclick="switchCalc('emi',this)">EMI</button>
+          <button class="calc-tab" onclick="switchCalc('tax',this)">Tax Saving</button>
+          <button class="calc-tab" onclick="switchCalc('inflation',this)">Inflation</button>
+          <button class="calc-tab" onclick="switchCalc('compare',this)">FD vs SIP vs PPF</button>
+        </div>
+
+        <!-- Goal SIP -->
+        <div class="calc-section active" id="calc-goal">
+          <div class="calc-row"><label>Target Amount (₹)</label><div class="calc-row-inner"><input type="range" min="100000" max="10000000" step="100000" value="5000000" oninput="calcGoal(this.value,'g-target-v');gCalc()"><span class="cval" id="g-target-v">₹50L</span></div></div>
+          <div class="calc-row"><label>Time Period (Years)</label><div class="calc-row-inner"><input type="range" min="1" max="30" value="10" oninput="document.getElementById('g-years-v').textContent=this.value+' yrs';gCalc()"><span class="cval" id="g-years-v">10 yrs</span></div></div>
+          <div class="calc-row"><label>Expected Return (% p.a.)</label><div class="calc-row-inner"><input type="range" min="6" max="20" step="0.5" value="12" oninput="document.getElementById('g-rate-v').textContent=parseFloat(this.value).toFixed(1)+'%';gCalc()"><span class="cval" id="g-rate-v">12.0%</span></div></div>
+          <div class="res-grid">
+            <div class="res-card gold"><div class="rl">Monthly SIP needed</div><div class="rv" id="g-sip">—</div></div>
+            <div class="res-card"><div class="rl">Total invested</div><div class="rv" id="g-invested">—</div></div>
+            <div class="res-card"><div class="rl">Wealth gained</div><div class="rv" id="g-gains">—</div></div>
           </div>
         </div>
+
+        <!-- Lump Sum vs SIP -->
+        <div class="calc-section" id="calc-lumpsum">
+          <div class="calc-row"><label>Investment Amount (₹)</label><div class="calc-row-inner"><input type="range" min="10000" max="1000000" step="10000" value="100000" oninput="calcGoal(this.value,'l-amount-v');lCalc()"><span class="cval" id="l-amount-v">₹1L</span></div></div>
+          <div class="calc-row"><label>Time Period (Years)</label><div class="calc-row-inner"><input type="range" min="1" max="30" value="10" oninput="document.getElementById('l-years-v').textContent=this.value+' yrs';lCalc()"><span class="cval" id="l-years-v">10 yrs</span></div></div>
+          <div class="calc-row"><label>Expected Return (% p.a.)</label><div class="calc-row-inner"><input type="range" min="6" max="20" step="0.5" value="12" oninput="document.getElementById('l-rate-v').textContent=parseFloat(this.value).toFixed(1)+'%';lCalc()"><span class="cval" id="l-rate-v">12.0%</span></div></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:1.2rem;">
+            <div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;">Lump Sum</div>
+              <div class="res-grid" style="grid-template-columns:1fr;">
+                <div class="res-card"><div class="rl">Invested</div><div class="rv" id="lump-invested">—</div></div>
+                <div class="res-card gold"><div class="rl">Maturity value</div><div class="rv" id="lump-val">—</div></div>
+                <div class="res-card"><div class="rl">Gains</div><div class="rv" id="lump-gains">—</div></div>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;">SIP (same total)</div>
+              <div class="res-grid" style="grid-template-columns:1fr;">
+                <div class="res-card"><div class="rl">Monthly SIP</div><div class="rv" id="sip-monthly">—</div></div>
+                <div class="res-card gold"><div class="rl">Maturity value</div><div class="rv" id="sip-val">—</div></div>
+                <div class="res-card"><div class="rl">Gains</div><div class="rv" id="sip-gains">—</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- EMI -->
+        <div class="calc-section" id="calc-emi">
+          <div class="loan-tabs">
+            <button class="loan-tab active" id="lt-home" onclick="setLoan('home')">Home Loan</button>
+            <button class="loan-tab" id="lt-car" onclick="setLoan('car')">Car Loan</button>
+            <button class="loan-tab" id="lt-personal" onclick="setLoan('personal')">Personal Loan</button>
+          </div>
+          <div class="calc-row"><label>Loan Amount (₹)</label><div class="calc-row-inner"><input type="range" min="100000" max="10000000" step="100000" value="3000000" id="e-amount-r" oninput="calcGoal(this.value,'e-amount-v');eCalc()"><span class="cval" id="e-amount-v">₹30L</span></div></div>
+          <div class="calc-row"><label>Interest Rate (% p.a.)</label><div class="calc-row-inner"><input type="range" min="6" max="20" step="0.1" value="8.5" id="e-rate-r" oninput="document.getElementById('e-rate-v').textContent=parseFloat(this.value).toFixed(1)+'%';eCalc()"><span class="cval" id="e-rate-v">8.5%</span></div></div>
+          <div class="calc-row"><label>Tenure (Years)</label><div class="calc-row-inner"><input type="range" min="1" max="30" value="20" id="e-tenure-r" oninput="document.getElementById('e-tenure-v').textContent=this.value+' yrs';eCalc()"><span class="cval" id="e-tenure-v">20 yrs</span></div></div>
+          <div class="res-grid">
+            <div class="res-card gold"><div class="rl">Monthly EMI</div><div class="rv" id="emi-val">—</div></div>
+            <div class="res-card"><div class="rl">Total interest</div><div class="rv" id="emi-interest">—</div></div>
+            <div class="res-card"><div class="rl">Total payment</div><div class="rv" id="emi-total">—</div></div>
+          </div>
+        </div>
+
+        <!-- Tax Saving -->
+        <div class="calc-section" id="calc-tax">
+          <div class="calc-row"><label>Annual Income (₹)</label><div class="calc-row-inner"><input type="range" min="500000" max="5000000" step="50000" value="1200000" oninput="calcGoal(this.value,'t-income-v');tCalc(this.closest('.calc-section'))"><span class="cval" id="t-income-v">₹12L</span></div></div>
+          <div class="calc-row"><label>80C Investment (₹)</label><div class="calc-row-inner"><input type="range" min="0" max="150000" step="5000" value="100000" oninput="calcGoal(this.value,'t-80c-v');tCalc(this.closest('.calc-section'))"><span class="cval" id="t-80c-v">₹1L</span></div></div>
+          <div class="calc-row"><label>NPS 80CCD (₹)</label><div class="calc-row-inner"><input type="range" min="0" max="50000" step="1000" value="25000" oninput="calcGoal(this.value,'t-nps-v');tCalc(this.closest('.calc-section'))"><span class="cval" id="t-nps-v">₹25K</span></div></div>
+          <div class="calc-row"><label>HRA Exemption (₹)</label><div class="calc-row-inner"><input type="range" min="0" max="300000" step="5000" value="120000" oninput="calcGoal(this.value,'t-hra-v');tCalc(this.closest('.calc-section'))"><span class="cval" id="t-hra-v">₹1.2L</span></div></div>
+          <div class="res-grid">
+            <div class="res-card"><div class="rl">Gross income</div><div class="rv" id="t-gross">—</div></div>
+            <div class="res-card"><div class="rl">Deductions</div><div class="rv" id="t-deductions">—</div></div>
+            <div class="res-card"><div class="rl">Taxable income</div><div class="rv" id="t-taxable">—</div></div>
+            <div class="res-card gold"><div class="rl">Tax saved</div><div class="rv" id="t-saved">—</div></div>
+          </div>
+          <p style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:1rem;">Estimated under old tax regime with 4% cess. Consult a tax advisor for exact figures.</p>
+        </div>
+
+        <!-- Inflation -->
+        <div class="calc-section" id="calc-inflation">
+          <div class="calc-row"><label>Current Amount (₹)</label><div class="calc-row-inner"><input type="range" min="1000" max="1000000" step="1000" value="10000" oninput="calcGoal(this.value,'i-amount-v');iCalc(this.closest('.calc-section'))"><span class="cval" id="i-amount-v">₹10K</span></div></div>
+          <div class="calc-row"><label>Inflation Rate (% p.a.)</label><div class="calc-row-inner"><input type="range" min="3" max="10" step="0.5" value="6" oninput="document.getElementById('i-rate-v').textContent=parseFloat(this.value).toFixed(1)+'%';iCalc(this.closest('.calc-section'))"><span class="cval" id="i-rate-v">6.0%</span></div></div>
+          <div class="calc-row"><label>Time Period (Years)</label><div class="calc-row-inner"><input type="range" min="1" max="30" value="10" oninput="document.getElementById('i-years-v').textContent=this.value+' yrs';iCalc(this.closest('.calc-section'))"><span class="cval" id="i-years-v">10 yrs</span></div></div>
+          <div class="res-grid">
+            <div class="res-card"><div class="rl">Future cost of same</div><div class="rv" id="i-future">—</div></div>
+            <div class="res-card gold"><div class="rl">Purchasing power lost</div><div class="rv" id="i-lost">—</div></div>
+            <div class="res-card"><div class="rl">Real value in today's ₹</div><div class="rv" id="i-real">—</div></div>
+          </div>
+          <p style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:1rem;">This is why investing to beat inflation matters more than saving alone.</p>
+        </div>
+
+        <!-- FD vs SIP vs PPF -->
+        <div class="calc-section" id="calc-compare">
+          <div class="calc-row"><label>Monthly Investment (₹)</label><div class="calc-row-inner"><input type="range" min="500" max="50000" step="500" value="5000" oninput="calcGoal(this.value,'c-amount-v');cCalc(this.closest('.calc-section'))"><span class="cval" id="c-amount-v">₹5K</span></div></div>
+          <div class="calc-row"><label>Time Period (Years)</label><div class="calc-row-inner"><input type="range" min="1" max="25" value="15" oninput="document.getElementById('c-years-v').textContent=this.value+' yrs';cCalc(this.closest('.calc-section'))"><span class="cval" id="c-years-v">15 yrs</span></div></div>
+          <div class="compare-grid">
+            <div class="compare-card" id="ccard-fd">
+              <div class="ct">FD</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-bottom:6px;">7% p.a. · taxable</div>
+              <div class="cv" id="c-fd">—</div>
+            </div>
+            <div class="compare-card" id="ccard-ppf">
+              <div class="ct">PPF</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-bottom:6px;">7.1% p.a. · tax-free</div>
+              <div class="cv" id="c-ppf">—</div>
+            </div>
+            <div class="compare-card" id="ccard-sip">
+              <div class="ct">Equity SIP</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-bottom:6px;">12% p.a. · market-linked</div>
+              <div class="cv" id="c-sip">—</div>
+            </div>
+          </div>
+          <p style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:1rem;">Returns are illustrative. Equity SIP returns vary. Past performance not indicative of future results.</p>
+        </div>
+
       </div>
-    </section>
+    </div><!-- end page-calculators -->
 
-    <!-- QUIZ ARENA -->
-    <section id="quizTool" class="hidden">
+
+    <!-- ══════════ PAGE: NET WORTH ══════════ -->
+    <div class="page" id="page-networth">
       <div class="glass-card tool-card">
+        <div class="tool-header">
+          <h3 class="tool-title">Net Worth Estimator</h3>
+          <p class="tool-sub">Track your assets and liabilities</p>
+        </div>
 
-        <!-- Level Select -->
-        <div id="quizHome">
-          <div class="tool-header">
-            <h3 class="tool-title">Quiz Arena</h3>
-            <p class="tool-sub">Test your financial intelligence</p>
-          </div>
-          <div class="level-grid">
-            <div class="level-card" onclick="startQuiz('beginner')">
-              <div class="level-icon">🌱</div>
-              <h4 class="level-title">Beginner</h4>
-              <p class="level-desc">Savings, inflation, budgeting &amp; basic concepts</p>
-              <span class="level-badge badge-green">10 Questions</span>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+          <!-- Assets -->
+          <div>
+            <div class="nw-section-title" style="color:rgba(74,222,128,0.7);">Assets</div>
+            <div class="nw-section">
+              <div class="nw-row"><label>Cash &amp; Savings (₹)</label><input type="number" id="nw-cash" value="0" oninput="calcNetWorth()" placeholder="0"/></div>
+              <div class="nw-row"><label>Mutual Funds / SIPs (₹)</label><input type="number" id="nw-mf" value="0" oninput="calcNetWorth()" placeholder="0"/></div>
+              <div class="nw-row"><label>Stocks (₹)</label><input type="number" id="nw-stocks" value="0" oninput="calcNetWorth()" placeholder="0"/></div>
+              <div class="nw-row"><label>Fixed Deposits (₹)</label><input type="number" id="nw-fd" value="0" oninput="calcNetWorth()" placeholder="0"/></div>
+              <div class="nw-row"><label>PPF / NPS (₹)</label><input type="number" id="nw-ppf" value="0" oninput="calcNetWorth()" placeholder="0"/></div>
+              <div class="nw-row"><label>Real Estate value (₹)</label><input type="number" id="nw-re" value="0" oninput="calcNetWorth()" placeholder="0"/></div>
+              <div class="nw-row"><label>Gold / Jewellery (₹)</label><input type="number" id="nw-gold" value="0" oninput="calcNetWorth()" placeholder="0"/></div>
+              <div class="nw-row"><label>Vehicle(s) (₹)</label><input type="number" id="nw-vehicle" value="0" oninput="calcNetWorth()" placeholder="0"/></div>
+              <div class="nw-row"><label>Other assets (₹)</label><input type="number" id="nw-other-a" value="0" oninput="calcNetWorth()" placeholder="0"/></div>
             </div>
-            <div class="level-card" onclick="startQuiz('intermediate')">
-              <div class="level-icon">🚀</div>
-              <h4 class="level-title">Intermediate</h4>
-              <p class="level-desc">Mutual funds, SIPs, bonds, equity &amp; markets</p>
-              <span class="level-badge badge-gold">10 Questions</span>
+          </div>
+
+          <!-- Liabilities -->
+          <div>
+            <div class="nw-section-title" style="color:rgba(248,113,113,0.7);">Liabilities</div>
+            <div class="nw-section">
+              <div class="nw-row"><label>Home Loan (₹)</label><input type="number" id="nw-homeloan" value="0" oninput="calcNetWorth()" placeholder="0"/></div>
+              <div class="nw-row"><label>Car Loan (₹)</label><input type="number" id="nw-carloan" value="0" oninput="calcNetWorth()" placeholder="0"/></div>
+              <div class="nw-row"><label>Personal Loan (₹)</label><input type="number" id="nw-ploan" value="0" oninput="calcNetWorth()" placeholder="0"/></div>
+              <div class="nw-row"><label>Education Loan (₹)</label><input type="number" id="nw-eloan" value="0" oninput="calcNetWorth()" placeholder="0"/></div>
+              <div class="nw-row"><label>Credit Card dues (₹)</label><input type="number" id="nw-cc" value="0" oninput="calcNetWorth()" placeholder="0"/></div>
+              <div class="nw-row"><label>Other debts (₹)</label><input type="number" id="nw-other-l" value="0" oninput="calcNetWorth()" placeholder="0"/></div>
             </div>
           </div>
         </div>
 
-        <!-- Quiz Play -->
-        <div id="quizPlay" class="hidden">
-          <div class="quiz-topbar">
-            <div style="display:flex;align-items:center;gap:10px">
-              <span id="quizLevelLabel" class="quiz-level-tag"></span>
-              <span id="quizQNum" class="quiz-qnum"></span>
+        <div class="nw-summary">
+          <div class="nw-sum-card positive"><div class="nl">Total assets</div><div class="nv" id="nw-total-assets">₹0</div></div>
+          <div class="nw-sum-card negative"><div class="nl">Total liabilities</div><div class="nv" id="nw-total-liab">₹0</div></div>
+          <div class="nw-sum-card total"><div class="nl">Net worth</div><div class="nv" id="nw-total">₹0</div></div>
+        </div>
+        <p id="nw-message" style="text-align:center;font-size:14px;color:rgba(255,255,255,0.45);margin-top:1rem;"></p>
+      </div>
+    </div><!-- end page-networth -->
+
+
+    <!-- ══════════ PAGE: ABOUT ══════════ -->
+    <div class="page" id="page-about">
+      <div class="glass-card tool-card about-wrap">
+
+        <!-- Hero -->
+        <div style="display:flex;align-items:center;gap:18px;margin-bottom:1.5rem;">
+          <div class="about-avatar">JP</div>
+          <div>
+            <div style="font-size:22px;font-weight:700;color:#fff;font-family:'Syne',sans-serif;margin-bottom:5px;">Jayant Pareek</div>
+            <div style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:8px;">Founder, Wealthfy &nbsp;·&nbsp; Age 16 &nbsp;·&nbsp; Jaipur, Rajasthan</div>
+            <div>
+              <span class="about-badge" style="background:rgba(245,197,24,0.15);color:#F5C518;border:1px solid rgba(245,197,24,0.3);">Investor since age 13</span>
+              <span class="about-badge" style="background:rgba(139,92,246,0.15);color:#a78bfa;border:1px solid rgba(139,92,246,0.3);">Student founder</span>
+              <span class="about-badge" style="background:rgba(34,197,94,0.1);color:#4ade80;border:1px solid rgba(34,197,94,0.25);">Finance educator</span>
             </div>
-            <button class="quit-btn" onclick="quitQuiz()">✕ Quit</button>
-          </div>
-          <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-          <p class="quiz-question" id="quizQuestion"></p>
-          <div class="options-grid" id="optionsGrid"></div>
-          <div id="nextWrap" class="next-wrap hidden">
-            <div id="explanationBox" class="explanation"></div>
-            <button class="btn-gold" onclick="nextQuestion()">Next Question →</button>
           </div>
         </div>
 
-        <!-- Result -->
-        <div id="quizResult" class="hidden">
-          <div class="result-screen">
-            <div class="result-emoji" id="resultEmoji"></div>
-            <h3 class="result-title" id="resultTitle"></h3>
-            <p class="result-sub" id="resultSub"></p>
-            <div class="score-ring-wrap">
-              <svg class="score-ring" viewBox="0 0 120 120">
-                <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="10"/>
-                <circle cx="60" cy="60" r="50" fill="none" stroke="#F5C518" stroke-width="10"
-                  stroke-linecap="round" stroke-dasharray="314" id="scoreArc"
-                  stroke-dashoffset="314" transform="rotate(-90 60 60)"/>
-              </svg>
-              <div class="score-inner">
-                <span class="score-big" id="scoreBig">0</span>
-                <span class="score-of">/10</span>
-              </div>
-            </div>
-            <div class="result-actions">
-              <button class="btn-gold" onclick="retryQuiz()">Try Again</button>
-              <button class="btn-outline" onclick="quitQuiz()">Change Level</button>
-            </div>
+        <div class="about-quote">
+          "I made my first investment at 13. Most people wait until their 30s.<br/>I built Wealthfy so you don't have to wait either."
+        </div>
+
+        <hr class="about-divider"/>
+
+        <div class="about-section-label">My journey</div>
+        <div class="timeline">
+          <div class="titem">
+            <div class="tyear">AGE 13 · 2023</div>
+            <div class="tdesc">Made my first SIP and stock market investment. Most kids my age had no idea what a mutual fund was — I was already obsessed with how money grows.</div>
+          </div>
+          <div class="titem">
+            <div class="tyear">AGE 14–15 · 2024</div>
+            <div class="tdesc">Kept learning, kept investing. Understood the real power of compounding firsthand. Watched my money grow while doing homework.</div>
+          </div>
+          <div class="titem">
+            <div class="tyear">AGE 16 · 2025</div>
+            <div class="tdesc">Built Wealthfy — because finance education in India is either too boring or too complex for young people. That needed to change.</div>
           </div>
         </div>
+
+        <hr class="about-divider"/>
+
+        <div class="about-section-label">What I believe</div>
+
+        <div class="belief-card">
+          <div class="belief-icon" style="background:rgba(245,197,24,0.1);">⏰</div>
+          <div>
+            <div style="font-size:14px;font-weight:600;color:#fff;margin-bottom:3px;">Start before you're ready</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.55;">The best time to invest was yesterday. The second best time is today. Age is never a barrier — I proved that at 13.</div>
+          </div>
+        </div>
+
+        <div class="belief-card">
+          <div class="belief-icon" style="background:rgba(139,92,246,0.1);">💡</div>
+          <div>
+            <div style="font-size:14px;font-weight:600;color:#fff;margin-bottom:3px;">Knowledge beats fear</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.55;">Most people don't invest because they're scared of the unknown. Education is the cure. That's exactly why Wealthfy exists.</div>
+          </div>
+        </div>
+
+        <div class="belief-card">
+          <div class="belief-icon" style="background:rgba(34,197,94,0.1);">📈</div>
+          <div>
+            <div style="font-size:14px;font-weight:600;color:#fff;margin-bottom:3px;">Small amounts, massive future</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.55;">You don't need lakhs to start. A ₹500 SIP at age 15 could be ₹15L+ by the time you're 35. Consistency is everything.</div>
+          </div>
+        </div>
+
+        <hr class="about-divider"/>
+
+        <div class="about-section-label">By the numbers</div>
+        <div class="about-stat-grid">
+          <div class="about-stat"><div class="asn">3 yrs</div><div class="asl">investing experience</div></div>
+          <div class="about-stat"><div class="asn">16</div><div class="asl">years old, building</div></div>
+          <div class="about-stat"><div class="asn">1</div><div class="asl">mission: wealth for all</div></div>
+        </div>
+
+        <hr class="about-divider"/>
+
+        <div class="about-section-label">Get in touch</div>
+        <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:1rem;">Have feedback, ideas, or just want to talk investing? Every message gets read.</p>
+        <button class="btn-gold" onclick="window.location.href='mailto:hello@wealthfy.in'" style="max-width:220px;">Write to Jayant →</button>
 
       </div>
-    </section>
+    </div><!-- end page-about -->
+
   </main>
 
   <script src="script.js"></script>
+  <script>
+    /* ── Page Navigation ── */
+    function showPage(name) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
+      document.getElementById('page-' + name).classList.add('active');
+      event.target.classList.add('active');
+      if (name === 'calculators') initAllCalcs();
+      if (name === 'networth') calcNetWorth();
+    }
+
+    /* ── Calculator tab switcher ── */
+    function switchCalc(id, btn) {
+      document.querySelectorAll('.calc-section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.calc-tab').forEach(b => b.classList.remove('active'));
+      document.getElementById('calc-' + id).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    /* ── Number formatter ── */
+    function fmt(n) {
+      n = Math.round(n);
+      if (n >= 10000000) return '₹' + (n/10000000).toFixed(2) + ' Cr';
+      if (n >= 100000)   return '₹' + (n/100000).toFixed(2) + ' L';
+      if (n >= 1000)     return '₹' + (n/1000).toFixed(1) + ' K';
+      return '₹' + n.toLocaleString('en-IN');
+    }
+
+    /* ── Generic label updater for ₹ sliders ── */
+    function calcGoal(val, labelId) {
+      val = +val;
+      document.getElementById(labelId).textContent = fmt(val);
+    }
+
+    /* ── Goal SIP ── */
+    function gCalc() {
+      const section = document.getElementById('calc-goal');
+      const sliders = section.querySelectorAll('input[type=range]');
+      const target = +sliders[0].value;
+      const yrs    = +sliders[1].value;
+      const rate   = +sliders[2].value;
+      const n = yrs * 12, r = rate / 100 / 12;
+      const sip = target * r / (Math.pow(1+r,n) - 1);
+      const invested = sip * n;
+      document.getElementById('g-sip').textContent      = fmt(sip);
+      document.getElementById('g-invested').textContent  = fmt(invested);
+      document.getElementById('g-gains').textContent     = fmt(target - invested);
+    }
+
+    /* ── Lump Sum vs SIP ── */
+    function lCalc() {
+      const section = document.getElementById('calc-lumpsum');
+      const sliders = section.querySelectorAll('input[type=range]');
+      const amt  = +sliders[0].value;
+      const yrs  = +sliders[1].value;
+      const rate = +sliders[2].value;
+      const lumpVal = amt * Math.pow(1 + rate/100, yrs);
+      const monthly = amt / (yrs * 12);
+      const n = yrs*12, r = rate/100/12;
+      const sipVal = monthly * (Math.pow(1+r,n)-1)/r * (1+r);
+      document.getElementById('lump-invested').textContent = fmt(amt);
+      document.getElementById('lump-val').textContent      = fmt(lumpVal);
+      document.getElementById('lump-gains').textContent    = fmt(lumpVal - amt);
+      document.getElementById('sip-monthly').textContent   = fmt(monthly) + '/mo';
+      document.getElementById('sip-val').textContent       = fmt(sipVal);
+      document.getElementById('sip-gains').textContent     = fmt(sipVal - amt);
+    }
+
+    /* ── EMI ── */
+    function eCalc() {
+      const P = +document.getElementById('e-amount-r').value;
+      const r = +document.getElementById('e-rate-r').value / 100 / 12;
+      const n = +document.getElementById('e-tenure-r').value * 12;
+      const emi   = P * r * Math.pow(1+r,n) / (Math.pow(1+r,n)-1);
+      const total = emi * n;
+      document.getElementById('emi-val').textContent      = fmt(emi);
+      document.getElementById('emi-interest').textContent = fmt(total - P);
+      document.getElementById('emi-total').textContent    = fmt(total);
+    }
+
+    function setLoan(type) {
+      document.querySelectorAll('.loan-tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('lt-' + type).classList.add('active');
+      const rates   = {home: 8.5, car: 9.5, personal: 14};
+      const tenures = {home: 20,  car: 7,   personal: 5};
+      document.getElementById('e-rate-r').value   = rates[type];
+      document.getElementById('e-tenure-r').value = tenures[type];
+      document.getElementById('e-rate-v').textContent   = rates[type].toFixed(1) + '%';
+      document.getElementById('e-tenure-v').textContent = tenures[type] + ' yrs';
+      eCalc();
+    }
+
+    /* ── Tax Saving ── */
+    function tCalc(section) {
+      const sliders = section.querySelectorAll('input[type=range]');
+      const income = +sliders[0].value;
+      const c80    = +sliders[1].value;
+      const nps    = +sliders[2].value;
+      const hra    = +sliders[3].value;
+      const deductions = Math.min(c80, 150000) + Math.min(nps, 50000) + hra + 50000;
+      const taxable    = Math.max(0, income - deductions);
+      const taxBefore  = calcOldTax(income - 50000 - hra);
+      const taxAfter   = calcOldTax(taxable);
+      const saved      = Math.max(0, taxBefore - taxAfter);
+      document.getElementById('t-gross').textContent      = fmt(income);
+      document.getElementById('t-deductions').textContent = fmt(Math.min(deductions, income));
+      document.getElementById('t-taxable').textContent    = fmt(taxable);
+      document.getElementById('t-saved').textContent      = fmt(saved);
+    }
+    function calcOldTax(income) {
+      let tax = 0;
+      if (income <= 250000) return 0;
+      else if (income <= 500000)  tax = (income - 250000) * 0.05;
+      else if (income <= 1000000) tax = 12500 + (income - 500000) * 0.20;
+      else                        tax = 112500 + (income - 1000000) * 0.30;
+      return tax * 1.04;
+    }
+
+    /* ── Inflation ── */
+    function iCalc(section) {
+      const sliders = section.querySelectorAll('input[type=range]');
+      const amt  = +sliders[0].value;
+      const rate = +sliders[1].value;
+      const yrs  = +sliders[2].value;
+      const future = amt * Math.pow(1 + rate/100, yrs);
+      const real   = amt / Math.pow(1 + rate/100, yrs);
+      document.getElementById('i-future').textContent = fmt(future);
+      document.getElementById('i-lost').textContent   = fmt(future - amt);
+      document.getElementById('i-real').textContent   = fmt(real);
+    }
+
+    /* ── Compare ── */
+    function cCalc(section) {
+      const sliders = section.querySelectorAll('input[type=range]');
+      const monthly = +sliders[0].value;
+      const yrs     = +sliders[1].value;
+      function sipFV(m, rate, y) {
+        const n = y*12, r = rate/100/12;
+        return m * (Math.pow(1+r,n)-1)/r * (1+r);
+      }
+      const fd  = sipFV(monthly, 7,   yrs);
+      const ppf = sipFV(monthly, 7.1, yrs);
+      const sip = sipFV(monthly, 12,  yrs);
+      document.getElementById('c-fd').textContent  = fmt(fd);
+      document.getElementById('c-ppf').textContent = fmt(ppf);
+      document.getElementById('c-sip').textContent = fmt(sip);
+      ['ccard-fd','ccard-ppf','ccard-sip'].forEach(id => {
+        const el = document.getElementById(id);
+        el.classList.remove('best');
+        const b = el.querySelector('.cbadge');
+        if (b) b.remove();
+      });
+      const vals = [fd, ppf, sip], ids = ['ccard-fd','ccard-ppf','ccard-sip'];
+      const best = document.getElementById(ids[vals.indexOf(Math.max(...vals))]);
+      best.classList.add('best');
+      const badge = document.createElement('div');
+      badge.className = 'cbadge';
+      badge.textContent = 'Highest returns';
+      best.insertBefore(badge, best.firstChild);
+    }
+
+    /* ── Net Worth ── */
+    function calcNetWorth() {
+      const get = id => +(document.getElementById(id).value) || 0;
+      const assets =
+        get('nw-cash') + get('nw-mf') + get('nw-stocks') +
+        get('nw-fd') + get('nw-ppf') + get('nw-re') +
+        get('nw-gold') + get('nw-vehicle') + get('nw-other-a');
+      const liab =
+        get('nw-homeloan') + get('nw-carloan') + get('nw-ploan') +
+        get('nw-eloan') + get('nw-cc') + get('nw-other-l');
+      const nw = assets - liab;
+      document.getElementById('nw-total-assets').textContent = fmt(assets);
+      document.getElementById('nw-total-liab').textContent   = fmt(liab);
+      document.getElementById('nw-total').textContent        = fmt(Math.abs(nw));
+      const msg = document.getElementById('nw-message');
+      if (assets === 0 && liab === 0) {
+        msg.textContent = 'Enter your assets and liabilities above to calculate your net worth.';
+      } else if (nw > 0) {
+        msg.textContent = 'Great! Your assets exceed your liabilities. Keep building wealth.';
+        msg.style.color = 'rgba(74,222,128,0.7)';
+      } else if (nw < 0) {
+        msg.textContent = 'Your liabilities exceed your assets. Focus on reducing debt first.';
+        msg.style.color = 'rgba(248,113,113,0.7)';
+      } else {
+        msg.textContent = 'Your net worth is zero. Every rupee invested now changes this.';
+        msg.style.color = 'rgba(245,197,24,0.7)';
+      }
+    }
+
+    /* ── Init all calculators on first open ── */
+    function initAllCalcs() {
+      gCalc(); lCalc(); eCalc();
+      tCalc(document.getElementById('calc-tax'));
+      iCalc(document.getElementById('calc-inflation'));
+      cCalc(document.getElementById('calc-compare'));
+    }
+  </script>
 </body>
 </html>
